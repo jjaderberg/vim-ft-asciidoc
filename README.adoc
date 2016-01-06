@@ -1,4 +1,4 @@
-= Vim Asciidoc file type plugin
+= Vim AsciiDoc file type plugin
 :experimental:
 :attr1: some
 :attr2: some-other
@@ -8,7 +8,7 @@
 toc::[]
 
 This is a file type plugin (`ftplugin`) for Vim.
-It provides support for working efficiently with Asciidoc files in Vim.
+It provides support for working efficiently with AsciiDoc files in Vim.
 
 
 == Installation
@@ -44,7 +44,7 @@ git clone git://github.com/jjaderberg/vim-ft-asciidoc.git
 . No help file.
   If you don't find the relevant information below or in the code, just keep pressing keys and see what happens.
 . Bias.
-.. I use the link:http://www.asciidoctor.org[Asciidoctor] processor and abide by a company style guide.
+.. I use the link:http://www.asciidoctor.org[asciidoctor] processor and abide by a company style guide.
    This informs how the plugin works.
 .. I mostly use a Mac with Vim 7.4.903 and Firefox.
    I have not really tested the plugin with other systems.
@@ -70,7 +70,7 @@ Editing support includes:
 All `maps` defined in the plugin begin with `<LocalLeader>`.
 I use `,` for local leader.
 I would type that below, instead of typing out the actual mapping, because it's so long.
-However, the Asciidoctor processor doesn't seem to handle `,` as the first character in a `kbd:[]` macro.
+However, the asciidoctor processor doesn't seem to handle `,` as the first character in a `kbd:[]` macro.
 Instead I use `\` throughout this document.
 Whatever you have assigned to `<LocalLeader>` is what you would use as the first key of each map.
 --
@@ -180,6 +180,7 @@ If you decide to implement this, please consider sharing your improvements by su
 | example                  | kbd:[\example]
 | listing (code)           | kbd:[\code]
 | literal                  | kbd:[\literal]
+| passthrough              | kbd:[\passthrough]
 | quote                    | kbd:[\quote]
 | sidebar                  | kbd:[\sidebar]
 | source                   | kbd:[\source]
@@ -236,8 +237,6 @@ Select the first three words and press kbd:[\t-], then select the last four word
 [line-through]#Strike me out# and []#give me an attribute#!
 ....
 
-[line-through]#Strike me out# and []#give me an attribute#!
-
 When adding an empty attribute, the operation leaves the cursor in insert mode between the brackets.
 
 .Maps for text formatting
@@ -283,7 +282,7 @@ In this case, the file path is the _target_ of the image macro.
 
 There are other cases, like the `kbd:[]` macros that are littered throughout this document.
 The text from which I want to create a kbd macro is not going to make sense as a target, but as attributes in the macro.
-If the cursor is over over the text or the text is visually selected, typing kbd:[\kbd] will turn
+If the cursor is over the text, or the text is visually selected, typing kbd:[\kbd] will turn
 
 ....
 \kbd
@@ -341,8 +340,8 @@ Some buffer local variables can be set in order to pass parameters to the proces
 
 The buffer local variables are included in `'makefile'` when the plugin is loaded.
 You can begin editing your file, set these options, and then reload the plugin by 're-editing', with kbd:[:e].
-If you compile most of your documents on a proper build system, this is useful for the one-off open ended edit.
-For anything else this workflow is broken.
+If you compile most of your documents on a proper build system, this is useful for the one-off open ended edits.
+For anything else this workflow is somewhat broken.
 I would like to see it improved, _deo volente_.
 
 The nice feature here, however, is "compile on save".
@@ -372,12 +371,12 @@ If you don't use Firefox and asciidoctor.js for previewing, then you should chan
 === Jump around
 Vim has excellent support for navigating between files, including the `gf` command to edit a file whose name is the text under the cursor.
 Similarly, with `ctags` or `cscope`, navigating different references between files is a breeze.
-With Asciidoc, there are cases where these don't work well, however.
+With AsciiDoc, there are cases where these don't work well, however.
 Particularly this is true when links or filenames contain attribute references.
 
 [TIP]
 --
-Unrelated to this plugin, for `ctags` to play nice with Asciidoc, consdier adding the following to your `~/.ctags` file.
+Unrelated to this plugin, for `ctags` to play nice with AsciiDoc, consdier adding the following to your `~/.ctags` file.
 I found this somewhere and it has been useful.
 It could do with some improvements, but here it is fwiw.
 ----
@@ -430,3 +429,14 @@ Similar to cross references, external links can be navigated with the same comma
 They are opened with the application recorded in `g:asciidoc_browser` with a simple `!open` command.
 For now, the browser option is hard coded as Firefox.
 It should be easy to set that up properly, but it's not a priority for me at the moment.
+
+.Navigation maps (what other kinds are there?)
+|============================================================================
+| Preview file with `g:asciidoc_preview_app` application | kbd:[\of]
+| Follow link under cursor in                            |
+| the current buffer                                     | kbd:[\gf]
+| a horizontal split                                     | kbd:[\<C-W>f]
+| a vertical split                                       | kbd:[\<C-W><C-F>]
+| a new tab                                              | kbd:[\<C-W>gf]
+|============================================================================
+
