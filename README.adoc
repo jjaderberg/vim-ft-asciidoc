@@ -137,6 +137,16 @@ Indeed.
 ....
 ----
 
+To comment out the visually selected block, I type kbd:[+,comment+].
+
+....
+////
+Paragraph.
+Short but sweet.
+Indeed.
+////
+....
+
 For blocks, the normal mode maps generally operate on the cursor line.
 If instead of selecting the paragraph I rest the cursor on the middle line, kbd:[+,example+] gives
 
@@ -175,6 +185,7 @@ If you decide to implement this, please consider sharing your improvements by su
 .Maps for block editing
 |======================================================================================================
 | admonitions (NOTE, etc.) | kbd:[+,caution+], kbd:[+,important+], kbd:[+,note+], kbd:[+,tip+], kbd:[+,warning+]
+| comment                  | kbd:[+,comment+]
 | example                  | kbd:[+,example+]
 | listing (code)           | kbd:[+,code+]
 | literal                  | kbd:[+,literal+]

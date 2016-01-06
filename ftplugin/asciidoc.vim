@@ -187,6 +187,11 @@ inoremap <buffer> <localleader>code <Esc>:AdocInsertParagraph i ---- source<CR>
 nnoremap <buffer> <localleader>code :AdocInsertParagraph n ---- source<CR>
 vnoremap <buffer> <localleader>code :<C-U>AdocInsertParagraph v ---- source<CR>
 
+" comment block
+inoremap <buffer> <localleader>comment <Esc>:AdocInsertParagraph i //// <CR>
+nnoremap <buffer> <localleader>comment :AdocInsertParagraph n //// <CR>
+vnoremap <buffer> <localleader>comment :<C-U>AdocInsertParagraph v //// <CR>
+
 " example block
 inoremap <buffer> <localleader>example <Esc>:AdocInsertParagraph i ====<CR>
 nnoremap <buffer> <localleader>example :AdocInsertParagraph n ====<CR>
@@ -253,10 +258,10 @@ vnoremap <buffer> <localleader>warning :<C-U>AdocInsertParagraph v -- WARNING<CR
 
 " The built-in paragraph styles are:
 " Handled:
-" CAUTION, IMPORTANT, NOTE, TIP, WARNING, example,
+" CAUTION, IMPORTANT, NOTE, TIP, WARNING, comment, example,
 " listing, literal, normal, quote, sidebar, source, verse,
 " Review:
-" abstract, comment, graphviz, latex, music, partintro
+" abstract, graphviz, latex, music, partintro
 
 " End.Block }}}
 
