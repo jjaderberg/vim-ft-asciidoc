@@ -67,11 +67,9 @@ Editing support includes:
 
 [IMPORTANT]
 --
-All `maps` defined in the plugin begin with `<LocalLeader>`.
-I use `,` for local leader.
-I would type that below, instead of typing out the actual mapping, because it's so long.
-However, the asciidoctor processor doesn't seem to handle `,` as the first character in a `kbd:[]` macro.
-Instead I use `\` throughout this document.
+All maps defined in the plugin begin with `<LocalLeader>`.
+Showing the full maps below would be cumbersome and unhelpful: kbd:[<LocalLeader>te].
+I use `,` for local leader, therefore all the maps below lead with kbd:[+,+].
 Whatever you have assigned to `<LocalLeader>` is what you would use as the first key of each map.
 --
 
@@ -86,7 +84,7 @@ of easy diffing, efficient editing, and the bonus safeguard: very long sentences
 stick out like a sore thumb?
 ....
 
-If you abide by the Zen of "one sentence per line", position the cursor anywhere in the paragraph and type kbd:[\spl].
+If you abide by the Zen of "one sentence per line", position the cursor anywhere in the paragraph and type kbd:[+,spl+].
 
 ....
 You have a paragraph of text.
@@ -107,7 +105,7 @@ Insert a new code block, or turn a sentence or paragraph into a quote or admonit
 
 Let's say I write documentation and want to provide a "before" and "after" example.
 For this I may use two literal blocks, containing the "before" and "after" text.
-In insert mode I type kbd:[\literal].
+In insert mode I type kbd:[+,literal+].
 This gives me a literal block:
 
 ----
@@ -129,7 +127,7 @@ Short but sweet.
 Indeed.
 ....
 
-If I visually select this paragraph, for instance with kbd:[vip], and then type kbd:[\literal], I get
+If I visually select this paragraph, for instance with kbd:[vip], and then type kbd:[+,literal+], I get
 
 ----
 ....
@@ -140,7 +138,7 @@ Indeed.
 ----
 
 For blocks, the normal mode maps generally operate on the cursor line.
-If instead of selecting the paragraph I rest the cursor on the middle line, kbd:[\example] gives
+If instead of selecting the paragraph I rest the cursor on the middle line, kbd:[+,example+] gives
 
 ....
 Paragraph.
@@ -154,7 +152,7 @@ Indeed.
 ==== Admonitions
 
 Similar to code and example blocks, admonitions can be created from normal, insert and visual modes.
-Typing kbd:[\note] in insert mode will give:
+Typing kbd:[+,note+] in insert mode will give:
 
 ....
 [NOTE]
@@ -176,20 +174,20 @@ If you decide to implement this, please consider sharing your improvements by su
 
 .Maps for block editing
 |======================================================================================================
-| admonitions (NOTE, etc.) | kbd:[\caution], kbd:[\important], kbd:[\note], kbd:[\tip], kbd:[\warning]
-| example                  | kbd:[\example]
-| listing (code)           | kbd:[\code]
-| literal                  | kbd:[\literal]
-| passthrough              | kbd:[\passthrough]
-| quote                    | kbd:[\quote]
-| sidebar                  | kbd:[\sidebar]
-| source                   | kbd:[\source]
-| verse                    | kbd:[\verse]
+| admonitions (NOTE, etc.) | kbd:[+,caution+], kbd:[+,important+], kbd:[+,note+], kbd:[+,tip+], kbd:[+,warning+]
+| example                  | kbd:[+,example+]
+| listing (code)           | kbd:[+,code+]
+| literal                  | kbd:[+,literal+]
+| passthrough              | kbd:[+,passthrough+]
+| quote                    | kbd:[+,quote+]
+| sidebar                  | kbd:[+,sidebar+]
+| source                   | kbd:[+,source+]
+| verse                    | kbd:[+,verse+]
 |======================================================================================================
 
 Each of these operations have maps with the same left hand side for normal, insert and visual modes.
 
-Typing kbd:[\passthrough] looks like about the same amount of work as making the corresponding edit manually.
+Typing kbd:[+,passthrough+] looks like about the same amount of work as making the corresponding edit manually.
 However, for all their verbosity, I find these maps tremendously helpful.
 I do think shorter `lhs` is desirable--I just haven't come up with the right convention yet.
 
@@ -197,7 +195,7 @@ I do think shorter `lhs` is desirable--I just haven't come up with the right con
 ==== Sugar
 
 Some operations have added sugar.
-For example, typing kbd:[\quote] to get a quote block will add the _quote_ attribute, along with placeholder _author_ and _source_.
+For example, typing kbd:[+,quote+] to get a quote block will add the _quote_ attribute, along with placeholder _author_ and _source_.
 The author and source will be visually selected, and can easily be edited or removed with normal Vim commands.
 
 [subs="quotes"]
@@ -213,12 +211,12 @@ Parvus error in principio magnus est in fine.
 
 Inline text formatting can be achieved for all the _quote_ or _format styles_.
 
-To emphasize a word, rest the cursor on it and type kbd:[\te].
+To emphasize a word, rest the cursor on it and type kbd:[+,te+].
 
-To mark part of a word as *strong*, visually select that part and type kbd:[\ts].
+To mark part of a word as *strong*, visually select that part and type kbd:[+,ts+].
 
 ....
-To ma**rk** p**ar**t of a **wor**d as *strong*, **visu**ally select **tha**t part and type kbd:[\ts].
+To ma**rk** p**ar**t of a **wor**d as *strong*, **visu**ally select **tha**t part and type kbd:[+,ts+].
 ....
 
 If the visual selection is over the entire word, the single format character is added.
@@ -231,7 +229,7 @@ In addition to the ordinary text formatting operations there are maps for strike
 Strike me out and give me an attribute!
 ....
 
-Select the first three words and press kbd:[\t-], then select the last four words and type kbd:[\ta].
+Select the first three words and press kbd:[+,t-+], then select the last four words and type kbd:[+,ta+].
 
 ....
 [line-through]#Strike me out# and []#give me an attribute#!
@@ -241,14 +239,14 @@ When adding an empty attribute, the operation leaves the cursor in insert mode b
 
 .Maps for text formatting
 |========================================
-| code            | kbd:[\tc]
-| emphasis        | kbd:[\te]
-| passthrough     | kbd:[\tp]
-| strong          | kbd:[\ts]
-| subscript       | kbd:[\tj]
-| superscript     | kbd:[\tk]
-| strike-out      | kbd:[\t-]
-| attribute       | kbd:[\ta]
+| code            | kbd:[+,tc+]
+| emphasis        | kbd:[+,te+]
+| passthrough     | kbd:[+,tp+]
+| strong          | kbd:[+,ts+]
+| subscript       | kbd:[+,tj+]
+| superscript     | kbd:[+,tk+]
+| strike-out      | kbd:[+,t-+]
+| attribute       | kbd:[+,ta+]
 |========================================
 
 [TIP]
@@ -271,7 +269,7 @@ Consider:
 Look at images/image.img it is beautiful!
 ....
 
-To turn the file path above into an image macro, rest the cursor on it and type kbd:[\img].
+To turn the file path above into an image macro, rest the cursor on it and type kbd:[+,img+].
 (Visually selecting also works.)
 
 ....
@@ -282,7 +280,7 @@ In this case, the file path is the _target_ of the image macro.
 
 There are other cases, like the `kbd:[]` macros that are littered throughout this document.
 The text from which I want to create a kbd macro is not going to make sense as a target, but as attributes in the macro.
-If the cursor is over the text, or the text is visually selected, typing kbd:[\kbd] will turn
+If the cursor is over the text, or the text is visually selected, typing kbd:[+,kbd+] will turn
 
 ....
 \kbd
@@ -291,21 +289,21 @@ If the cursor is over the text, or the text is visually selected, typing kbd:[\k
 into
 
 ....
-kbd:[\kbd]
+kbd:[,kbd]
 ....
 
 
 
-The kbd:[\btn], kbd:[\kbd], and kbd:[\menu] normal mode maps operate on the big WORD under the cursor.
+The kbd:[+,btn+], kbd:[+,kbd+], and kbd:[+,menu+] normal mode maps operate on the big WORD under the cursor.
 
 [options="header"]
 |========================================
 | Macros        |
-| image         | kbd:[\img]
-| keyboard      | kbd:[\kbd]
-| menu          | kbd:[\menu]
-| button        | kbd:[\btn]
-| include       | kbd:[\inc]
+| image         | kbd:[+,img+]
+| keyboard      | kbd:[+,kbd+]
+| menu          | kbd:[+,menu+]
+| button        | kbd:[+,btn+]
+| include       | kbd:[+,inc+]
 |========================================
 
 
@@ -317,7 +315,7 @@ Another editing operation that is mapped is turning a string into a cross refere
 Check out the section on Macros if you haven't already.
 ....
 
-Position the cursor over a word, or visually select some text, then type kbd:[\xr].
+Position the cursor over a word, or visually select some text, then type kbd:[+,xr+].
 
 ....
 Check out the <<section-on-Macros, section on Macros>> if you haven't already.
@@ -345,7 +343,7 @@ For anything else this workflow is somewhat broken.
 I would like to see it improved, _deo volente_.
 
 The nice feature here, however, is "compile on save".
-By typing kbd:[\qi], "Quick Iteration" mode is toggled.
+By typing kbd:[+,qi+], "Quick Iteration" mode is toggled.
 Every time the buffer is saved, the file is compiled.
 Use the same command to toggle it off.
 
@@ -361,7 +359,7 @@ If you fork and edit the plugin to handle this more gracefully, please consider 
 == Navigating
 
 === Preview file
-To preview the file being edited in an external application, type kbd:[\pf].
+To preview the file being edited in an external application, type kbd:[+,pf+].
 This will run an `!open` command for the current file and ask application `g:asciidoc_preview_app` to open the current file.
 
 The preview command is not very portable, especially since the preview application is hard coded to be Firefox.
@@ -415,7 +413,7 @@ Submit your questions to link:http://www.{attr3}.org[someone's website].
 ....
 
 Let's assume that there is a file called `other-doc.adoc` containing the `+[[some-other-section]]+` anchor.
-With the cursor on either cross reference, type kbd:[\gf] to go to the corresponding anchor.
+With the cursor on either cross reference, type kbd:[+,gf+] to go to the corresponding anchor.
 The plugin reads off all attributes in the document and performs the substitution.
 
 If the resulting link contains both a filename and an anchor reference, then the file is opened and the anchor is searched for.
@@ -442,11 +440,12 @@ It should be easy to set that up properly, but it's not a priority for me at the
 .Navigation maps (what other kinds are there?)
 [cols="5,2"]
 |============================================================================
-| Preview file with `g:asciidoc_preview_app` application | kbd:[\of]
+| Preview file with `g:asciidoc_preview_app` application | kbd:[+,of+]
 2+| Follow link under cursor in
-| ... the current buffer or browser                      | kbd:[\gf]
-| ... a horizontal split or browser                      | kbd:[\<C-W>f]
-| ... a vertical split or browser                        | kbd:[\<C-W><C-F>]
-| ... a new tab or browser                               | kbd:[\<C-W>gf]
+| ... the current buffer or browser                      | kbd:[+,gf+]
+| ... a horizontal split or browser                      | kbd:[+,<C-W>f+]
+| ... a vertical split or browser                        | kbd:[+,<C-W><C-F>+]
+| ... a new tab or browser                               | kbd:[+,<C-W>gf+]
 |============================================================================
 
+// %s/kbd:\[\zs\(\\\)\([^\]]\+\)\ze\]/+,\2+/gc
