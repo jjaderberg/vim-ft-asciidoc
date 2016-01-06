@@ -21,6 +21,8 @@ cd ~/.vim/bundle && \
 git clone git://github.com/jjaderberg/vim-ft-asciidoc.git
 ----
 
+If you are concerned about having your configuration overridden by a plugin, I salute you and please see <<appendix-a, Appendix A>>.
+
 
 == Features
 
@@ -459,4 +461,28 @@ It should be easy to set that up properly, but it's not a priority for me at the
 | ... a new tab or browser                               | kbd:[+,<C-W>gf+]
 |============================================================================
 
-// %s/kbd:\[\zs\(\\\)\([^\]]\+\)\ze\]/+,\2+/gc
+
+[[appendix-a]]
+== Appendix A
+
+By default, the plugin will set a few options and variables, and create lots of maps.
+All maps are buffer local and begin with `<LocalLeader>`.
+You can prevent this by setting `let g:asciidoc_use_defaults = []` in your vimrc.
+The functions and commands will be created, but they will not be mapped and no options will be set.
+
+Here is how the plugin sets it if you don't, use it for inspiration:
+
+[source, vim]
+----
+let g:asciidoc_use_defaults = ['folding', 'editing', 'navigating', 'compiling', 'options']
+----
+
+[TIP]
+--
+Not loading the defaults will render the plugin rather useless, why would you want to do that?
+For a start, it is polite to make it easy to prevent a plugin from overwriting ones configuration.
+Additionally, you may want to use some of the functionality but provide your own maps.
+For example, disable 'editing'.
+Then yank-put the editing section from `ftplugin/asciidoc.vim` into your own `after/ftplugin/asciidoc.vim`.
+Change the maps to your liking, _et voila_, a reasonably easy way to have it the Burger King way.
+--
