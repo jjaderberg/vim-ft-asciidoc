@@ -6,10 +6,10 @@
 "               28 November 2014
 " URL:          http://github.com/jjaderberg/vim-ft-asciidoc/
 
-if exists("b:did_plugin")
-    finish
-endif
-let b:did_plugin = 1
+" if exists("b:did_plugin")
+"     finish
+" endif
+" let b:did_plugin = 1
 
 if !exists('g:asciidoc_use_defaults')
     let g:asciidoc_use_defaults = [
@@ -241,6 +241,15 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
 
     " End.Block }}}
 
+    " Table ------------------------------------------------          {{{
+    " inoremap <buffer> <localleader>table |===<CR>|<CR>|===<Up><Esc>
+    " nnoremap <buffer> <localleader>table o|===<CR>|<CR>|===<Up><Esc>
+    " vnoremap <buffer> <localleader>table <Esc>`>o|===<Esc>`<O|===<Esc>:'<,'>s/.*/| \0/<CR>:nohlsearch<CR>
+    inoremap <buffer> <localleader>table <Esc>:AdocInsertTable i<CR>
+    nnoremap <buffer> <localleader>table :AdocInsertTable n<CR>
+    vnoremap <buffer> <localleader>table :<C-U>AdocInsertTable v<CR>
+    " End.Table }}}
+
     " Other ------------------------------------------------          {{{
 
     " Create xref ..........................................          {{{
@@ -266,5 +275,6 @@ command! -buffer -nargs=+ AdocInsertMacroVisualTarget call asciidoc#base#insert_
 command! -buffer -nargs=+ AdocInsertMacroVisualAttribs call asciidoc#base#insert_macro_attribs(<f-args>)
 command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cursor_link(<f-args>)
 command! -buffer -nargs=1 AdocInsertXref call asciidoc#base#create_xref(<f-args>)
+command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-args>)
 
 " vim: set fdm=marker:

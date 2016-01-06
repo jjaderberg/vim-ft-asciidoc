@@ -245,31 +245,6 @@ function! asciidoc#base#insert_macro_target(mode, type, name) abort " {{{
     let @/ = save_search
 endfunc " }}}
 
-function! s:insert_macro(type, name, target, attribs) abort " {{{
-    let name = a:name
-    if a:type == "block"
-        let colon = "::"
-    elseif a:type == "inline"
-        let colon = ":"
-    else
-        echoerr "invalid macro type (" . a:type . ")"
-        return -1
-    endif
-    if !<SID>validate_macro_name(name)
-        echoerr "invalid macro name (" . name . ")"
-        return -1
-    endif
-    let attribs = <SID>validate_macro_attribs(a:attribs)
-    if type(attribs) != type([])
-        echoerr "attributes may not contain unescaped ']' (" . string(a:attribs) . ")"
-        return -1
-    endif
-    let target = <SID>escape_macro_target(a:target)
-    let macro = name . colon . target . '[' . join(attribs, ', ') . ']'
-    " echo macro
-    return macro
-endfunc " }}}
-
 function! asciidoc#base#create_xref(mode) abort " {{{
 " The function uses a normal mode command to wrap text in <<,>>.
 " It operates either on the word under the cursor or on a visual selection.
@@ -317,6 +292,60 @@ function! asciidoc#base#insert_paragraph(mode, delim, ...) abort " {{{
         endif
         execute cmd
     endif
+endfunc " }}}
+
+function! asciidoc#base#insert_table(mode) abort " {{{
+    if a:mode == 'i'
+        execute "normal! i|===\<CR>|\<CR>|===\<Up>"
+    elseif a:mode == 'n'
+        execute "normal! O|===\<Esc>"
+        if getline(line('.') - 1) !~ '^$'
+            execute "normal! O\<Esc>j"
+        endif
+        execute "normal! j0i| \<Esc>o|===\<Esc>"
+        if getline(line('.') + 1) !~ '^$'
+            execute "normal! o\<Esc>k"
+        endif
+        execute "normal! 2k02l"
+    elseif a:mode == 'v'
+        execute "normal! \<Esc>`>o|===\<Esc>"
+        if getline(line('.') + 1) !~ '^$'
+            execute "normal! o\<Esc>k"
+        endif
+        execute "normal! `<O|===\<Esc>"
+        if getline(line('.') - 1) !~ '^$'
+            execute "normal! O\<Esc>j"
+        endif
+        execute "'<,'>s/.*/| \\0/"
+        execute "nohlsearch"
+    else
+        echoerr "invalid mode (" . a:mode . ")"
+    endif
+endfunc " }}}
+
+function! s:insert_macro(type, name, target, attribs) abort " {{{
+    let name = a:name
+    if a:type == "block"
+        let colon = "::"
+    elseif a:type == "inline"
+        let colon = ":"
+    else
+        echoerr "invalid macro type (" . a:type . ")"
+        return -1
+    endif
+    if !<SID>validate_macro_name(name)
+        echoerr "invalid macro name (" . name . ")"
+        return -1
+    endif
+    let attribs = <SID>validate_macro_attribs(a:attribs)
+    if type(attribs) != type([])
+        echoerr "attributes may not contain unescaped ']' (" . string(a:attribs) . ")"
+        return -1
+    endif
+    let target = <SID>escape_macro_target(a:target)
+    let macro = name . colon . target . '[' . join(attribs, ', ') . ']'
+    " echo macro
+    return macro
 endfunc " }}}
 
 function! s:validate_macro_name(name) abort " {{{

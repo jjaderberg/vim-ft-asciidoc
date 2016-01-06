@@ -65,6 +65,7 @@ Editing support includes:
 * Turn a paragraph into one-sentence-per-line.
 * Insert different kinds of paragraphs (blocks).
 * Format text.
+* Insert tables.
 * Insert macros and cross references.
 
 [IMPORTANT]
@@ -268,6 +269,61 @@ Mnemonic: kbd:[t]ext kbd:[e]mphasis, etc.
 For subscript and superscript the memory devise is kbd:[j] for down and kbd:[k] for up.
 For strike-out, it's a dash.
 --
+
+
+=== Tables
+
+The plugin includes basic table support.
+
+Similar to blocks, a table can be inserted with kbd:[+,table+].
+In insert mode this gives:
+
+.Insert mode
+....
+|===
+|
+|===
+....
+
+For normal and visual modes also, behaviour is similar to block editing.
+
+.Before
+....
+Paragraph.
+Short but sweet.
+Indeed.
+....
+
+In normal mode, the table will contain the cursor line.
+If necessary, a blank line is added above and below.
+
+.After, normal mode
+....
+Paragraph.
+
+|===
+| Short but sweet.
+|===
+
+Indeed.
+....
+
+For visually selections, the lines will be put into the table.
+Newline padding is added above and below, as needed.
+Selecting the two first lines in _before_ and typing kbd:[+,table+] will result in:
+
+.After, visual mode
+....
+
+|===
+| Paragraph.
+| Short but sweet.
+|===
+
+Indeed.
+....
+
+These are the very basics of beginning to work with tables.
 
 
 === Macros
