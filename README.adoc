@@ -404,8 +404,11 @@ Consider this document:
 = Doc
 :attr1: some
 :attr2: some-other
+:attr3: someone-else
 
 Compare <<{attr1}-section, Some section>> to <<other.adoc#{attr2}-section, Some other section>>.
+
+Submit your questions to link:http://www.{attr3}.org[someone's website].
 
 [[some-section]]
 == Some section
@@ -418,6 +421,11 @@ The plugin reads off all attributes in the document and performs the substitutio
 If the resulting link contains both a filename and an anchor reference, then the file is opened and the anchor is searched for.
 If there is no filename, the anchor is searched for in the current document.
 
+If there is a filename, but the file doesn't exist, the user is prompted whether to proceed editing a new file.
+This is useful for creating a link before creating a new document, for instance in a note taking system or Wiki.
+If editing proceeds, a new buffer is opened for the file, but it is not saved.
+The anchor is put into the buffer as a reminder to include the link target which was used to navigate to the file.
+
 [NOTE]
 --
 Attribute substitution only works for attributes that are set in the current document.
@@ -425,18 +433,20 @@ If the attribute is set in another document, which includes the current document
 --
 
 .External links
-Similar to cross references, external links can be navigated with the same command.
-They are opened with the application recorded in `g:asciidoc_browser` with a simple `!open` command.
+As with cross references, external links can be navigated, using the same command.
+For the link above, the attribute `attr3` is interpolated and the link `http://www.someone-else.org/` is then followed.
+External links are opened with the application recorded in `g:asciidoc_browser` with a simple `!open` command.
 For now, the browser option is hard coded as Firefox.
 It should be easy to set that up properly, but it's not a priority for me at the moment.
 
 .Navigation maps (what other kinds are there?)
+[cols="5,2"]
 |============================================================================
 | Preview file with `g:asciidoc_preview_app` application | kbd:[\of]
-| Follow link under cursor in                            |
-| the current buffer                                     | kbd:[\gf]
-| a horizontal split                                     | kbd:[\<C-W>f]
-| a vertical split                                       | kbd:[\<C-W><C-F>]
-| a new tab                                              | kbd:[\<C-W>gf]
+2+| Follow link under cursor in
+| ... the current buffer or browser                      | kbd:[\gf]
+| ... a horizontal split or browser                      | kbd:[\<C-W>f]
+| ... a vertical split or browser                        | kbd:[\<C-W><C-F>]
+| ... a new tab or browser                               | kbd:[\<C-W>gf]
 |============================================================================
 

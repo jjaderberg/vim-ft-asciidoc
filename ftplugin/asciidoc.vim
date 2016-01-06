@@ -109,28 +109,28 @@ nnoremap <buffer> ,<C-W>gf :AdocFollowLinkUnderCursor tabedit<CR>
 " Symmetric ................................................          {{{
 
 " strong
-vnoremap <buffer> <localleader>ts <Esc>:AdocWikiFormatText *<CR>
-nnoremap <buffer> <localleader>ts viw<Esc>:AdocWikiFormatText *<CR>
+vnoremap <buffer> <localleader>ts <Esc>:AdocFormatText *<CR>
+nnoremap <buffer> <localleader>ts viw<Esc>:AdocFormatText *<CR>
 
 " emphasis
-vnoremap <buffer> <localleader>te <Esc>:AdocWikiFormatText _<CR>
-nnoremap <buffer> <localleader>te viw<Esc>:AdocWikiFormatText _<CR>
+vnoremap <buffer> <localleader>te <Esc>:AdocFormatText _<CR>
+nnoremap <buffer> <localleader>te viw<Esc>:AdocFormatText _<CR>
 
 " code
-vnoremap <buffer> <localleader>tc <Esc>:AdocWikiFormatText `<CR>
-nnoremap <buffer> <localleader>tc viw<Esc>:AdocWikiFormatText `<CR>
+vnoremap <buffer> <localleader>tc <Esc>:AdocFormatText `<CR>
+nnoremap <buffer> <localleader>tc viw<Esc>:AdocFormatText `<CR>
 
 " superscript
-vnoremap <buffer> <localleader>tk <Esc>:AdocWikiFormatText ^<CR>
-nnoremap <buffer> <localleader>tk viw<Esc>:AdocWikiFormatText ^<CR>
+vnoremap <buffer> <localleader>tk <Esc>:AdocFormatText ^<CR>
+nnoremap <buffer> <localleader>tk viw<Esc>:AdocFormatText ^<CR>
 
 " subscript
-vnoremap <buffer> <localleader>tj <Esc>:AdocWikiFormatText ^<CR>
-nnoremap <buffer> <localleader>tj viw<Esc>:AdocWikiFormatText ^<CR>
+vnoremap <buffer> <localleader>tj <Esc>:AdocFormatText ^<CR>
+nnoremap <buffer> <localleader>tj viw<Esc>:AdocFormatText ^<CR>
 
 " passthrough
-vnoremap <buffer> <localleader>tp <Esc>:AdocWikiFormatText +<CR>
-nnoremap <buffer> <localleader>tp viw<Esc>:AdocWikiFormatText +<CR>
+vnoremap <buffer> <localleader>tp <Esc>:AdocFormatText +<CR>
+nnoremap <buffer> <localleader>tp viw<Esc>:AdocFormatText +<CR>
 
 " END.Symmetric }}}
 
@@ -280,7 +280,7 @@ command! -buffer -nargs=+ AdocInsertParagraph call asciidoc#base#insert_paragrap
 command! -buffer -nargs=1 AdocFormatText call asciidoc#base#format_text(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualTarget call asciidoc#base#insert_macro_target(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualAttribs call asciidoc#base#insert_macro_attribs(<f-args>)
-command! -buffer -nargs=? AdocFollowLinkUnderCursor call AdocFollowLinkUnderCursor(<f-args>)
+command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cursor_link(<f-args>)
 command! -buffer -nargs=1 AdocInsertXref call asciidoc#base#create_xref(<f-args>)
 
 " vim: set fdm=marker:

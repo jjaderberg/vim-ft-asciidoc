@@ -1,10 +1,10 @@
 " Vim autoload file
 " vim-ft-asciidoc/autoload/asciidoc.vim
 
-function! AdocFollowLinkUnderCursor(...) abort " {{{
-    let [type, link] = <SID>get_cursor_link()
+function! asciidoc#base#follow_cursor_link(...) abort " {{{
+    let [type, link] = asciidoc#base#get_cursor_link()
     if link =~ '{[^}]*}'
-        let link = <SID>expand_attributes(link)
+        let link = asciidoc#base#expand_attributes(link)
     endif
     if type == 'link'
         let link = strpart(link, matchend(link, 'link::\?'), len(link))
@@ -25,10 +25,10 @@ function! AdocFollowLinkUnderCursor(...) abort " {{{
     endif
 endfunc " }}}
 
-function! AdocGetAttribute(name) " {{{
+function! asciidoc#base#get_attribute(name) " {{{
 " Get a single attribute value by name.
 " Returns attribute name if no value was found.
-    let res = get(<SID>parse_attributes(1), a:name, a:name)
+    let res = get(asciidoc#base#parse_attributes(1), a:name, a:name)
     return res
 endfunc " }}}
 
@@ -65,8 +65,8 @@ function! asciidoc#base#format_text(fchar) abort " {{{
         if -1 != m1 || -1 != m2
             let char .= char
         endif
-        echo m1
-        echo m2
+        " echo m1
+        " echo m2
     endif
     execute 'normal! gv"ay'
     call setreg('a', '', 'ac')
@@ -98,14 +98,13 @@ endfunc " }}}
 
 function! asciidoc#base#expand_attributes(s) " {{{
 " Expand attributes in a string.
-    let res = substitute(a:s, '{\([^}]*\)}', '\=AdocGetAttribute(submatch(1))', 'g')
+    let res = substitute(a:s, '{\([^}]*\)}', '\=asciidoc#base#get_attribute(submatch(1))', 'g')
     return res
 endfunc " }}}
 
 function! asciidoc#base#get_cursor_link() abort "{{{
-                " \ 'anchor': '\[\[.\{-}\%#.\{-}]]',
     let patterns = {
-                \ 'xref': '<<.\{-}\%#.\{-}>>',
+                \ 'xref': '<<[^>]*\%#[^>]*>>',
                 \ 'link': 'link:[^| \t]\{-}\%#[^| \t]\{-}\[[^\]]*\]'
     \ }
     let save_cursor = getcurpos()
@@ -146,7 +145,16 @@ function! asciidoc#base#follow_link(link, kind, ...) " {{{
             if file !~ '/'
                 let file = expand("%:p:h") . "/" . file
             endif
-            let cmd .= file . '| /\[\[' . anchor . ']]'
+            if filereadable(file)
+                let cmd .= file . '| /\[\[' . anchor . ']]'
+            else
+                let yn = input("File " . file . " does not exist. Edit it anyway? (y/n) ")
+                if yn == 'y'
+                    let cmd .= file . '| normal! i[[' . anchor . ']]0'
+                else
+                    let cmd = ''
+                endif
+            endif
         else
             call search(link, 'w')
         endif
@@ -285,7 +293,6 @@ endfunc " }}}
 
 function! asciidoc#base#insert_paragraph(mode, delim, ...) abort " {{{
     let delim = a:delim
-    echom a:mode . a:delim . "  " . a:0
     let line = line('.')
     if a:mode == 'i'
         execute "normal! i".delim."\<CR>\<CR>".delim."\<CR>\<Esc>2k"
