@@ -98,6 +98,11 @@ Do you wish there were a convenient way to Zenify the paragraph?
 You know, so that you get the benefits of easy diffing, efficient editing, and the bonus safeguard: very long sentences stick out like a sore thumb?
 ....
 
+The operation will recognize some paragraph boundaries: empty line or line beginning with two or more of `-_.*+=`.
+It therefore usually works just fine to do this on a formatted block.
+
+The operation may fail to recognize the boundaries of some paragraph, or you may want to format part of a paragraph.
+In this case, visually select the lines to format and the operation will limit itself to these lines.
 
 === Blocks
 
@@ -230,7 +235,7 @@ To emphasize a word, rest the cursor on it and type kbd:[+,te+].
 To mark part of a word as *strong*, visually select that part and type kbd:[+,ts+].
 
 ....
-To ma**rk** p**ar**t of a **wor**d as *strong*, **visu**ally select **tha**t part and type kbd:[+,ts+].
+To ma**rk** p**ar**t of a **wor**d as *strong*, **visu**ally select **tha**t part and type kbd:[,ts].
 ....
 
 If the visual selection is over the entire word, the single format character is added.

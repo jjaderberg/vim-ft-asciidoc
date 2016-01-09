@@ -32,24 +32,33 @@ function! asciidoc#base#get_attribute(name) " {{{
     return res
 endfunc " }}}
 
-function! asciidoc#base#sentence_per_line() abort " {{{
-    let cur = getpos('.')
-    let pat = '^$\|^[-_.*+=]\{2}'
-    let bot = search(pat, 'n') - 1
-    let top = search(pat, 'bn') + 1
-    execute ":" . top
-    " echo string([top, bot])
-    execute 'normal! V' . (bot - top) . 'jJ0'
+function! asciidoc#base#sentence_per_line(mode) abort " {{{
+    let save_cursor = getcurpos()
+    if a:mode == 'n'
+        let pat = '^$\|^[-_.*+=]\{2}'
+        let bot = search(pat, 'n') - 1
+        let top = search(pat, 'bn') + 1
+        if top != bot
+            execute ":" . top
+            execute 'normal! V' . (bot - top) . 'jJ0'
+        endif
+    elseif a:mode == 'v'
+        normal! VJ0
+    endif
     while 1
         let l = line('.')
         normal! )
         if l == line('.')
-            normal! blr
+            " `normal! b` will skip over some characters, better search back for
+            " first non-whitespace
+            " normal! blr
+            call search('\S', 'b')
+            normal! lr
         else
             break
         endif
     endwhile
-    call setpos('.', cur)
+    call setpos('.', save_cursor)
 endfunc " }}}
 
 function! asciidoc#base#format_text(fchar) abort " {{{

@@ -258,7 +258,8 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     " End.Create xref }}}
 
     " One sentence per line ................................          {{{
-    nnoremap <buffer> <localleader>spl AdocSentencePerLine()<CR>
+    nnoremap <buffer> <localleader>spl :AdocSentencePerLine n<CR>
+    vnoremap <buffer> <localleader>spl :<C-U>AdocSentencePerLine v<CR>
     " End.One sentence per line }}}
 
     " End.Other }}}
@@ -267,8 +268,8 @@ endif
 
 " End.Editing }}}
 
-command! -buffer AdocSentencePerLine call asciidoc#base#sentence_per_line()
 command! -buffer AdocToggleQuickIter call asciidoc#compiler#quick_iter()
+command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#base#sentence_per_line(<f-args>)
 command! -buffer -nargs=+ AdocInsertParagraph call asciidoc#base#insert_paragraph(<f-args>)
 command! -buffer -nargs=1 AdocFormatText call asciidoc#base#format_text(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualTarget call asciidoc#base#insert_macro_target(<f-args>)
