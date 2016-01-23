@@ -382,11 +382,32 @@ function! s:escape_linkname(unsub) abort " {{{
     return sub
 endfunc " }}}
 
+function! asciidoc#base#soft_linebreak() "{{{
+    let syntax_name = synIDattr(synID(line('.'), col('.'), 1), "name")
+    " let syntax_name = synIDattr(synID(line('.'), col('.'), 0), "name")
+    let apa = syntax_name =~? "table"
+    echo syntax_name
+    echo apa
+    let save_reg = @"
+    let save_search = @/
+    if syntax_name =~? "table"
+        normal! o| 
+    elseif syntax_name =~? "list"
+        let line = getline('.')
+        let list_prefix = matchstr(line, "[1-9*.]\{,6}")
+        let @" = list_prefix
+        execute "normal! o\<Esc>p$a"
+    endif
+    let @/ = save_search
+    let @" = save_reg
+    startinsert!
+endfunc "}}}
+
 function! s:escape_macro_target(target) abort " {{{
     return substitute(a:target, ' ', '%20', 'g')
 endfunc " }}}
 
-function! asciidoc#base#custom_jump(motion) range
+function! asciidoc#base#custom_jump(motion) range " {{{
     let cnt = v:count1
     let save_search = @/
     mark '
@@ -396,4 +417,4 @@ function! asciidoc#base#custom_jump(motion) range
     endwhile
     call histdel('/', -1)
     let @/ = save_search
-endfunction
+endfunction "}}}

@@ -252,12 +252,17 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     " End.Block }}}
 
     " Table ------------------------------------------------          {{{
-    " inoremap <buffer> <localleader>table |===<CR>|<CR>|===<Up><Esc>
-    " nnoremap <buffer> <localleader>table o|===<CR>|<CR>|===<Up><Esc>
-    " vnoremap <buffer> <localleader>table <Esc>`>o|===<Esc>`<O|===<Esc>:'<,'>s/.*/| \0/<CR>:nohlsearch<CR>
     inoremap <buffer> <localleader>table <Esc>:AdocInsertTable i<CR>
     nnoremap <buffer> <localleader>table :AdocInsertTable n<CR>
     vnoremap <buffer> <localleader>table :<C-U>AdocInsertTable v<CR>
+    " Table text objects
+    vnoremap <buffer> <silent> <LocalLeader>it :<C-U>call asciidoc#table#text_object(1, 1)<CR>
+    onoremap <buffer> <silent> <LocalLeader>it :<C-U>call asciidoc#table#text_object(1, 0)<CR>
+    vnoremap <buffer> <silent> <LocalLeader>at :<C-U>call asciidoc#table#text_object(0, 1)<CR>
+    onoremap <buffer> <silent> <LocalLeader>at :<C-U>call asciidoc#table#text_object(0, 0)<CR>
+    " Table attributes
+    nnoremap <buffer> <LocalLeader>cols :call asciidoc#table#insert_attributes('cols')<CR>
+    nnoremap <buffer> <LocalLeader>opts :call asciidoc#table#insert_attributes('options')<CR>
     " End.Table }}}
 
     " Other ------------------------------------------------          {{{

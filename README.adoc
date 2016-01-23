@@ -280,9 +280,15 @@ For strike-out, it's a dash.
 
 === Tables
 
-The plugin includes basic table support.
+The plugin includes some table support:
 
-Similar to blocks, a table can be inserted with kbd:[+,table+].
+* Insert tables (or insert text into tables).
+* Operate on tables as text objects kbd:[+,it+] kbd:[+,at+].
+* Add attributes to existing table.
+
+==== Insert table
+
+Similar to blocks, tables can be inserted with kbd:[+,table+].
 In insert mode this gives:
 
 .Insert mode
@@ -330,7 +336,18 @@ Selecting the two first lines in _before_ and typing kbd:[+,table+] will result 
 Indeed.
 ....
 
-These are the very basics of beginning to work with tables.
+
+==== Text objects
+
+There are two table text objects: kbd:[+,it+] and kbd:[+,at+].
+To visually select "inner table", that is, the lines within the table, use kbd:[+v,it+].
+To delete "a table", use kbd:[+d,at+].
+
+
+==== Attributes
+
+There are also two shorthands for adding the attributes `options=""` and `cols=""`.
+With the cursor inside the table, kbd:[+,cols+] adds the latter and kbd:[+,opts+] the former.
 
 
 [[editing-motions]]
