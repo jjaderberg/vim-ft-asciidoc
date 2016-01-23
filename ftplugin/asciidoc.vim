@@ -68,14 +68,14 @@ if -1 < match(g:asciidoc_use_defaults, 'compiling')
     if exists("b:adoc_stylesheet") | let &l:makeprg .= ' -a stylesheet="' . b:adoc_stylesheet . '"' | endif
 
     " Toggle quick iteration mode
-    nnoremap <buffer> <localleader>qi :AdocToggleQuickIter<CR>
+    nnoremap <buffer> <LocalLeader>qi :AdocToggleQuickIter<CR>
 endif
 " End.Compiling }}}
 
 " Navigating ===============================================          {{{
 if -1 < match(g:asciidoc_use_defaults, 'navigating')
     " Preview asciidoc file with `g:asciidoc_preview_app` application
-    nnoremap <buffer> <localleader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
+    nnoremap <buffer> <LocalLeader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
 
     " Follow link under cursor
     nnoremap <buffer> ,gf :AdocFollowLinkUnderCursor edit<CR>
@@ -101,40 +101,40 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     " Symmetric ............................................          {{{
 
     " strong
-    vnoremap <buffer> <localleader>ts <Esc>:AdocFormatText *<CR>
-    nnoremap <buffer> <localleader>ts viw<Esc>:AdocFormatText *<CR>
+    vnoremap <buffer> <LocalLeader>ts <Esc>:AdocFormatText *<CR>
+    nnoremap <buffer> <LocalLeader>ts viw<Esc>:AdocFormatText *<CR>
 
     " emphasis
-    vnoremap <buffer> <localleader>te <Esc>:AdocFormatText _<CR>
-    nnoremap <buffer> <localleader>te viw<Esc>:AdocFormatText _<CR>
+    vnoremap <buffer> <LocalLeader>te <Esc>:AdocFormatText _<CR>
+    nnoremap <buffer> <LocalLeader>te viw<Esc>:AdocFormatText _<CR>
 
     " code
-    vnoremap <buffer> <localleader>tc <Esc>:AdocFormatText `<CR>
-    nnoremap <buffer> <localleader>tc viw<Esc>:AdocFormatText `<CR>
+    vnoremap <buffer> <LocalLeader>tc <Esc>:AdocFormatText `<CR>
+    nnoremap <buffer> <LocalLeader>tc viw<Esc>:AdocFormatText `<CR>
 
     " superscript
-    vnoremap <buffer> <localleader>tk <Esc>:AdocFormatText ^<CR>
-    nnoremap <buffer> <localleader>tk viw<Esc>:AdocFormatText ^<CR>
+    vnoremap <buffer> <LocalLeader>tk <Esc>:AdocFormatText ^<CR>
+    nnoremap <buffer> <LocalLeader>tk viw<Esc>:AdocFormatText ^<CR>
 
     " subscript
-    vnoremap <buffer> <localleader>tj <Esc>:AdocFormatText ^<CR>
-    nnoremap <buffer> <localleader>tj viw<Esc>:AdocFormatText ^<CR>
+    vnoremap <buffer> <LocalLeader>tj <Esc>:AdocFormatText ^<CR>
+    nnoremap <buffer> <LocalLeader>tj viw<Esc>:AdocFormatText ^<CR>
 
     " passthrough
-    vnoremap <buffer> <localleader>tp <Esc>:AdocFormatText +<CR>
-    nnoremap <buffer> <localleader>tp viw<Esc>:AdocFormatText +<CR>
+    vnoremap <buffer> <LocalLeader>tp <Esc>:AdocFormatText +<CR>
+    nnoremap <buffer> <LocalLeader>tp viw<Esc>:AdocFormatText +<CR>
 
     " End.Symmetric }}}
 
     " Asymmetric ...........................................          {{{
 
     " line through
-    vnoremap <buffer> <localleader>t- <Esc>`>a#<Esc>`<i[line-through]#<Esc>
-    nnoremap <buffer> <localleader>t- viw<Esc>`>a#<Esc>`<i[line-through]#<Esc>
+    vnoremap <buffer> <LocalLeader>t- <Esc>`>a#<Esc>`<i[line-through]#<Esc>
+    nnoremap <buffer> <LocalLeader>t- viw<Esc>`>a#<Esc>`<i[line-through]#<Esc>
 
     " attribute
-    vnoremap <buffer> <localleader>ta <Esc>`>a#<Esc>`<i[]#<Esc>hi
-    nnoremap <buffer> <localleader>ta viw<Esc>`>a#<Esc>`<i[]#<Esc>hi
+    vnoremap <buffer> <LocalLeader>ta <Esc>`>a#<Esc>`<i[]#<Esc>hi
+    nnoremap <buffer> <LocalLeader>ta viw<Esc>`>a#<Esc>`<i[]#<Esc>hi
 
     " End.Asymmetric }}}
 
@@ -143,26 +143,26 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     " Macros ---------------------------------------------------          {{{
 
     " Image ....................................................          {{{
-    inoremap <buffer> <localleader>img image:[]<Left>
-    nnoremap <buffer> <localleader>img :AdocInsertMacroVisualTarget n inline image<CR>
-    vnoremap <buffer> <localleader>img :<C-U>AdocInsertMacroVisualTarget v inline image<CR>
+    inoremap <buffer> <LocalLeader>img image:[]<Left>
+    nnoremap <buffer> <LocalLeader>img :AdocInsertMacroVisualTarget n inline image<CR>
+    vnoremap <buffer> <LocalLeader>img :<C-U>AdocInsertMacroVisualTarget v inline image<CR>
     " }}}
 
     " Asciidoctor experimental .................................          {{{
     " kbd
-    inoremap <buffer> <localleader>kbd kbd:[]<Left>
-    nnoremap <buffer> <localleader>kbd :AdocInsertMacroVisualAttribs n inline kbd<CR>
-    vnoremap <buffer> <localleader>kbd :<C-U>AdocInsertMacroVisualAttribs v inline kbd<CR>
+    inoremap <buffer> <LocalLeader>kbd kbd:[]<Left>
+    nnoremap <buffer> <LocalLeader>kbd :AdocInsertMacroVisualAttribs n inline kbd<CR>
+    vnoremap <buffer> <LocalLeader>kbd :<C-U>AdocInsertMacroVisualAttribs v inline kbd<CR>
 
     " menu
-    inoremap <buffer> <localleader>menu menu:[]<Left>
-    nnoremap <buffer> <localleader>menu :AdocInsertMacroVisualAttribs n inline menu<CR>
-    vnoremap <buffer> <localleader>menu :<C-U>AdocInsertMacroVisualAttribs v inline menu<CR>
+    inoremap <buffer> <LocalLeader>menu menu:[]<Left>
+    nnoremap <buffer> <LocalLeader>menu :AdocInsertMacroVisualAttribs n inline menu<CR>
+    vnoremap <buffer> <LocalLeader>menu :<C-U>AdocInsertMacroVisualAttribs v inline menu<CR>
 
     " button
-    inoremap <buffer> <localleader>btn btn:[]<Left>
-    nnoremap <buffer> <localleader>btn :AdocInsertMacroVisualAttribs n inline btn<CR>
-    vnoremap <buffer> <localleader>btn :<C-U>AdocInsertMacroVisualAttribs v inline btn<CR>
+    inoremap <buffer> <LocalLeader>btn btn:[]<Left>
+    nnoremap <buffer> <LocalLeader>btn :AdocInsertMacroVisualAttribs n inline btn<CR>
+    vnoremap <buffer> <LocalLeader>btn :<C-U>AdocInsertMacroVisualAttribs v inline btn<CR>
     " End.Asciidoctor experimental }}}
 
     " Include ...........................................          {{{
@@ -170,81 +170,86 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     vnoremap <buffer> <LocalLeader>inc :<C-U>AdocInsertMacroVisualTarget v block include<CR>
     " End.Include}}}
 
+    " Link .................................................          {{{
+    nnoremap <buffer> <LocalLeader>link :AdocInsertMacroVisualTarget n inline link<CR>
+    vnoremap <buffer> <LocalLeader>link :<C-U>AdocInsertMacroVisualTarget v inline link<CR>
+    " End.Link }}}
+
     " End.Macros }}}
 
     " Block ------------------------------------------------          {{{
 
     " code block
-    inoremap <buffer> <localleader>code <Esc>:AdocInsertParagraph i ---- source<CR>
-    nnoremap <buffer> <localleader>code :AdocInsertParagraph n ---- source<CR>
-    vnoremap <buffer> <localleader>code :<C-U>AdocInsertParagraph v ---- source<CR>
+    inoremap <buffer> <LocalLeader>code <Esc>:AdocInsertParagraph i ---- source<CR>
+    nnoremap <buffer> <LocalLeader>code :AdocInsertParagraph n ---- source<CR>
+    vnoremap <buffer> <LocalLeader>code :<C-U>AdocInsertParagraph v ---- source<CR>
 
     " comment block
-    inoremap <buffer> <localleader>comment <Esc>:AdocInsertParagraph i //// <CR>
-    nnoremap <buffer> <localleader>comment :AdocInsertParagraph n //// <CR>
-    vnoremap <buffer> <localleader>comment :<C-U>AdocInsertParagraph v //// <CR>
+    inoremap <buffer> <LocalLeader>comment <Esc>:AdocInsertParagraph i //// <CR>
+    nnoremap <buffer> <LocalLeader>comment :AdocInsertParagraph n //// <CR>
+    vnoremap <buffer> <LocalLeader>comment :<C-U>AdocInsertParagraph v //// <CR>
 
     " example block
-    inoremap <buffer> <localleader>example <Esc>:AdocInsertParagraph i ====<CR>
-    nnoremap <buffer> <localleader>example :AdocInsertParagraph n ====<CR>
-    vnoremap <buffer> <localleader>example :<C-U>AdocInsertParagraph v ====<CR>
+    inoremap <buffer> <LocalLeader>example <Esc>:AdocInsertParagraph i ====<CR>
+    nnoremap <buffer> <LocalLeader>example :AdocInsertParagraph n ====<CR>
+    vnoremap <buffer> <LocalLeader>example :<C-U>AdocInsertParagraph v ====<CR>
 
     " literal block
-    inoremap <buffer> <localleader>literal <Esc>:AdocInsertParagraph i ....<CR>
-    nnoremap <buffer> <localleader>literal :AdocInsertParagraph n ....<CR>
-    vnoremap <buffer> <localleader>literal :<C-U>AdocInsertParagraph v ....<CR>
+    inoremap <buffer> <LocalLeader>literal <Esc>:AdocInsertParagraph i ....<CR>
+    nnoremap <buffer> <LocalLeader>literal :AdocInsertParagraph n ....<CR>
+    vnoremap <buffer> <LocalLeader>literal :<C-U>AdocInsertParagraph v ....<CR>
 
     " open block
-    inoremap <buffer> <localleader>open <Esc>:AdocInsertParagraph i --<CR>
-    nnoremap <buffer> <localleader>open :AdocInsertParagraph n --<CR>
-    vnoremap <buffer> <localleader>open :<C-U>AdocInsertParagraph v --<CR>
+    inoremap <buffer> <LocalLeader>open <Esc>:AdocInsertParagraph i --<CR>
+    nnoremap <buffer> <LocalLeader>open :AdocInsertParagraph n --<CR>
+    vnoremap <buffer> <LocalLeader>open :<C-U>AdocInsertParagraph v --<CR>
 
     " passthrough block
-    inoremap <buffer> <localleader>passthrough <Esc>:AdocInsertParagraph i ++++<CR>
-    nnoremap <buffer> <localleader>passthrough :AdocInsertParagraph n ++++<CR>
-    vnoremap <buffer> <localleader>passthrough :<C-U>AdocInsertParagraph v ++++<CR>
+    inoremap <buffer> <LocalLeader>passthrough <Esc>:AdocInsertParagraph i ++++<CR>
+    nnoremap <buffer> <LocalLeader>passthrough :AdocInsertParagraph n ++++<CR>
+    vnoremap <buffer> <LocalLeader>passthrough :<C-U>AdocInsertParagraph v ++++<CR>
 
     " quote block
-    inoremap <buffer> <localleader>quote <Esc>:AdocInsertParagraph i ____ quote author source<CR>
-    nnoremap <buffer> <localleader>quote :AdocInsertParagraph n ____ quote author source<CR>
-    vnoremap <buffer> <localleader>quote :<C-U>AdocInsertParagraph v ____ quote author source<CR>
+    inoremap <buffer> <LocalLeader>quote <Esc>:AdocInsertParagraph i ____ quote author source<CR>
+    nnoremap <buffer> <LocalLeader>quote :AdocInsertParagraph n ____ quote author source<CR>
+    vnoremap <buffer> <LocalLeader>quote :<C-U>AdocInsertParagraph v ____ quote author source<CR>
 
     " sidebar block
-    inoremap <buffer> <localleader>sidebar <Esc>:AdocInsertParagraph i ****<CR>
-    nnoremap <buffer> <localleader>sidebar :AdocInsertParagraph n ****<CR>
-    vnoremap <buffer> <localleader>sidebar :<C-U>AdocInsertParagraph v ****<CR>
+    inoremap <buffer> <LocalLeader>sidebar <Esc>:AdocInsertParagraph i ****<CR>
+    nnoremap <buffer> <LocalLeader>sidebar :AdocInsertParagraph n ****<CR>
+    vnoremap <buffer> <LocalLeader>sidebar :<C-U>AdocInsertParagraph v ****<CR>
 
     " verse block
-    inoremap <buffer> <localleader>verse <Esc>:AdocInsertParagraph i ____ verse author source<CR>
-    nnoremap <buffer> <localleader>verse :AdocInsertParagraph n ____ verse author source<CR>
-    vnoremap <buffer> <localleader>verse :<C-U>AdocInsertParagraph v ____ verse author source<CR>
+    inoremap <buffer> <LocalLeader>verse <Esc>:AdocInsertParagraph i ____ verse author source<CR>
+    nnoremap <buffer> <LocalLeader>verse :AdocInsertParagraph n ____ verse author source<CR>
+    vnoremap <buffer> <LocalLeader>verse :<C-U>AdocInsertParagraph v ____ verse author source<CR>
 
     " Admonition -------------------------------------------          {{{
 
     " caution
-    inoremap <buffer> <localleader>caution <Esc>:AdocInsertParagraph i -- CAUTION<CR>
-    nnoremap <buffer> <localleader>caution :AdocInsertParagraph n -- CAUTION<CR>
-    vnoremap <buffer> <localleader>caution :<C-U>AdocInsertParagraph v -- CAUTION<CR>
+    inoremap <buffer> <LocalLeader>caution <Esc>:AdocInsertParagraph i -- CAUTION<CR>
+    nnoremap <buffer> <LocalLeader>caution :AdocInsertParagraph n -- CAUTION<CR>
+    vnoremap <buffer> <LocalLeader>caution :<C-U>AdocInsertParagraph v -- CAUTION<CR>
 
     " important
-    inoremap <buffer> <localleader>important <Esc>:AdocInsertParagraph i -- IMPORTANT<CR>
-    nnoremap <buffer> <localleader>important :AdocInsertParagraph n -- IMPORTANT<CR>
-    vnoremap <buffer> <localleader>important :<C-U>AdocInsertParagraph v -- IMPORTANT<CR>
+    inoremap <buffer> <LocalLeader>important <Esc>:AdocInsertParagraph i -- IMPORTANT<CR>
+    nnoremap <buffer> <LocalLeader>important :AdocInsertParagraph n -- IMPORTANT<CR>
+    vnoremap <buffer> <LocalLeader>important :<C-U>AdocInsertParagraph v -- IMPORTANT<CR>
 
     " note
-    inoremap <buffer> <localleader>note <Esc>:AdocInsertParagraph i -- NOTE<CR>
-    nnoremap <buffer> <localleader>note :AdocInsertParagraph n -- NOTE<CR>
-    vnoremap <buffer> <localleader>note :<C-U>AdocInsertParagraph v -- NOTE<CR>
+    inoremap <buffer> <LocalLeader>note <Esc>:AdocInsertParagraph i -- NOTE<CR>
+    nnoremap <buffer> <LocalLeader>note :AdocInsertParagraph n -- NOTE<CR>
+    vnoremap <buffer> <LocalLeader>note :<C-U>AdocInsertParagraph v -- NOTE<CR>
 
     " tip
-    inoremap <buffer> <localleader>tip <Esc>:AdocInsertParagraph i -- TIP<CR>
-    nnoremap <buffer> <localleader>tip :AdocInsertParagraph n -- TIP<CR>
-    vnoremap <buffer> <localleader>tip :<C-U>AdocInsertParagraph v -- TIP<CR>
+    inoremap <buffer> <LocalLeader>tip <Esc>:AdocInsertParagraph i -- TIP<CR>
+    nnoremap <buffer> <LocalLeader>tip :AdocInsertParagraph n -- TIP<CR>
+    vnoremap <buffer> <LocalLeader>tip :<C-U>AdocInsertParagraph v -- TIP<CR>
 
     " warning
-    inoremap <buffer> <localleader>warning <Esc>:AdocInsertParagraph i -- WARNING<CR>
-    nnoremap <buffer> <localleader>warning :AdocInsertParagraph n -- WARNING<CR>
-    vnoremap <buffer> <localleader>warning :<C-U>AdocInsertParagraph v -- WARNING<CR>
+    inoremap <buffer> <LocalLeader>warning <Esc>:AdocInsertParagraph i -- WARNING<CR>
+    nnoremap <buffer> <LocalLeader>warning :AdocInsertParagraph n -- WARNING<CR>
+    vnoremap <buffer> <LocalLeader>warning :<C-U>AdocInsertParagraph v -- WARNING<CR>
 
     " End.Admonition }}}
 
@@ -253,17 +258,17 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     " End.Block }}}
 
     " Table ------------------------------------------------          {{{
-    inoremap <buffer> <localleader>table <Esc>:AdocInsertTable i<CR>
-    nnoremap <buffer> <localleader>table :AdocInsertTable n<CR>
-    vnoremap <buffer> <localleader>table :<C-U>AdocInsertTable v<CR>
+    inoremap <buffer> <LocalLeader>table <Esc>:AdocInsertTable i<CR>
+    nnoremap <buffer> <LocalLeader>table :AdocInsertTable n<CR>
+    vnoremap <buffer> <LocalLeader>table :<C-U>AdocInsertTable v<CR>
     " Table text objects
     vnoremap <buffer> <silent> <LocalLeader>it :<C-U>call asciidoc#table#text_object(1, 1)<CR>
     onoremap <buffer> <silent> <LocalLeader>it :<C-U>call asciidoc#table#text_object(1, 0)<CR>
     vnoremap <buffer> <silent> <LocalLeader>at :<C-U>call asciidoc#table#text_object(0, 1)<CR>
     onoremap <buffer> <silent> <LocalLeader>at :<C-U>call asciidoc#table#text_object(0, 0)<CR>
     " Table attributes
-    nnoremap <buffer> <LocalLeader>cols :call asciidoc#table#insert_attributes('cols')<CR>
-    nnoremap <buffer> <LocalLeader>opts :call asciidoc#table#insert_attributes('options')<CR>
+    nnoremap <buffer> <silent> <LocalLeader>cols :call asciidoc#table#insert_attributes('cols')<CR>
+    nnoremap <buffer> <silent> <LocalLeader>opts :call asciidoc#table#insert_attributes('options')<CR>
     " End.Table }}}
 
     " Other ------------------------------------------------          {{{
@@ -274,8 +279,8 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     " End.Create xref }}}
 
     " One sentence per line ................................          {{{
-    nnoremap <buffer> <localleader>spl :AdocSentencePerLine n<CR>
-    vnoremap <buffer> <localleader>spl :<C-U>AdocSentencePerLine v<CR>
+    nnoremap <buffer> <LocalLeader>spl :AdocSentencePerLine n<CR>
+    vnoremap <buffer> <LocalLeader>spl :<C-U>AdocSentencePerLine v<CR>
     " End.One sentence per line }}}
 
     " End.Other }}}
