@@ -1,104 +1,83 @@
-" Vim filetype plugin
-" Language:     AsciiDoc
-" Maintainer:   Jonatan Jäderberg <jonatan.jaderberg@jberg.info>
-" Last Changed: 4 January 2016
-"               16 September 2015
-"               28 November 2014
-" URL:          http://github.com/jjaderberg/vim-ft-asciidoc/
+*asciidoc.txt*	Filetype plugin for editing AsciiDoc
 
-" if exists("b:did_plugin")
-"     finish
-" endif
-" let b:did_plugin = 1
+		  __   ____   ___  __  __  ____   __    ___
+		 / _\ / ___) / __)(  )(  )(    \ /  \  / __)
+		/    \\___ \( (__  )(  )(  ) D ((  O )( (__
+		\_/\_/(____/ \___)(__)(__)(____/ \__/  \___)
 
-let s:save_cpo = &cpo
-set cpo&vim
+AsciiDoc filetype plugin, making my life easier working with AsciiDoc in Vim.
+I need a better name for this plugin. Like with most things, you can't reason
+about them well until you give them names.
+Let's experiment below, and see if a name sticks.
 
-if !exists('g:asciidoc_use_defaults')
-    let g:asciidoc_use_defaults = [
-                \ 'folding',
-                \ 'editing',
-                \ 'navigating',
-                \ 'compiling',
-                \ 'options',
-                \ ]
-endif
+==============================================================================
+1. Folding						*adoc-folding*
 
-let g:asciidoc_patterns = {
-            \ 'include': '\f*\%#\f*',
-            \ 'image': '\f*\%#\f*',
-            \ 'kbd': '\S*\%#\S*',
-            \ 'menu': '\S*\%#\S*',
-            \ 'btn': '\S*\%#\S*',
-            \ }
+VimsciDoc provides folding facilities with a simple fold expression function.
+It folds ATX-style section titles. If syntax is off or an unreasonable syntax
+file is used, the fold expression may be too eager. It will not fold example
+blocks, which is the case for the few fold expressions I've seen floating
+about. It will, however, fold section titles within literal and listing
+blocks. If syntax is on and a reasonable syntax file is used, the fold
+expression will verify that the line that looks like title is interpreted as a
+title by the syntax file, and avoid these mistakes.
 
+The following happens in `ftplugin/asciidoc.vim` with regards to folding.
 
-" Options ==================================================          {{{
-if -1 < match(g:asciidoc_use_defaults, 'options')
-    let g:asciidoc_browser = "Firefox"
-    let g:asciidoc_preview_app = "Firefox"
-
-    setlocal commentstring=//\ %s
-    setlocal comments=fl:////,://
-    setlocal spell
-    setlocal spelllang=en
-endif
-" END Options }}}
-
-" Folding ==================================================          {{{
-if -1 < match(g:asciidoc_use_defaults, 'folding')
     setlocal foldexpr=asciidoc#folding#foldexpr(v:lnum)
     setlocal foldmethod=expr
     setlocal foldlevel=1
 
-    " Debug foldexpr {{{
+If the folding does not work as expected, consider uncommenting the following
+lines to provide some simple local mappings for debugging.
+
     " nnoremap <buffer> ,fe :echo asciidoc#folding#foldexpr(line('.'))<CR>
     " nnoremap <buffer> ,fl :echo foldlevel('.')<CR>
     " nnoremap <buffer> ,fm :echo match(getline('.'), '=')<CR>
-    " }}}
-endif
-" End.Folding }}}
 
-" Compiling ================================================          {{{
-if -1 < match(g:asciidoc_use_defaults, 'compiling')
-    " Makeprg
-    let &l:makeprg="asciidoctor"
-    if exists("b:adoc_out_dir") | let &l:makeprg .= " -D " . b:adoc_out_dir | endif
-    if exists("b:adoc_styles_dir") | let &l:makeprg .= ' -a stylesdir="' . b:adoc_styles_dir . '"' | endif
-    if exists("b:adoc_stylesheet") | let &l:makeprg .= ' -a stylesheet="' . b:adoc_stylesheet . '"' | endif
+==============================================================================
+2. Compiling						*adoc-compiling*
 
-    " Toggle quick iteration mode
-    nnoremap <buffer> <localleader>qi :AdocToggleQuickIter<CR>
-endif
-" End.Compiling }}}
+AsciiVimDoc has some very simple and parochial compiler plugin features. It
+will assume that the user wants to use the Asciidoctor processor, and that it
+is installed on Path. It is possible to set some very limited options for the
+processor by setting buffer local variables. |buffer-variable|
 
-" Navigating ===============================================          {{{
-if -1 < match(g:asciidoc_use_defaults, 'navigating')
+Available buffer local variables~
+
+	b:adoc_out_dir			root directory of output
+	b:adoc_styles_dir		directory for stylesheets
+	b:adoc_stylesheet		stylesheet file
+
+To facilitate a fast cycle of editing and reviewing, a quick iteration mode is
+available, doing "compile on save". Toggle this facility on and off with
+`:AdocToggleQuickIter`. Default binding is `<LocalLeader>qi`.
+
+==============================================================================
+3. Navigating						*adoc-navigating*
+
     " Preview asciidoc file with `g:asciidoc_preview_app` application
     nnoremap <buffer> <localleader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
 
     " Follow link under cursor
-    nnoremap <buffer> ,gf :AdocFollowLinkUnderCursor edit<CR>
-    nnoremap <buffer> ,<C-W>f :AdocFollowLinkUnderCursor split<CR>
-    nnoremap <buffer> ,<C-W><C-F> :AdocFollowLinkUnderCursor vsplit<CR>
-    nnoremap <buffer> ,<C-W>gf :AdocFollowLinkUnderCursor tabedit<CR>
+    nnoremap <buffer> <LocalLeader>gf :AdocFollowLinkUnderCursor edit<CR>
+    nnoremap <buffer> <LocalLeader><C-W>f :AdocFollowLinkUnderCursor split<CR>
+    nnoremap <buffer> <LocalLeader><C-W><C-F> :AdocFollowLinkUnderCursor vsplit<CR>
+    nnoremap <buffer> <LocalLeader><C-W>gf :AdocFollowLinkUnderCursor tabedit<CR>
 
     " Motions
-    " Next/Previous section title
+    " Next/Previous section title, see |]]| and |[[|
     nnoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
-    onoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
+    onoremap <buffer> <silent> ]] :<C-U>call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
     nnoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
-    onoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
-endif
-" End.Navigating }}}
+    onoremap <buffer> <silent> [[ :<C-U>call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
 
-" Editing ==================================================          {{{
+==============================================================================
+4. Editing						*adoc-editing*
 
-if -1 < match(g:asciidoc_use_defaults, 'editing')
+Formatting
+----------
 
-    " Formatting -------------------------------------------          {{{
-
-    " Symmetric ............................................          {{{
 
     " strong
     vnoremap <buffer> <localleader>ts <Esc>:AdocFormatText *<CR>
@@ -138,9 +117,8 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
 
     " End.Asymmetric }}}
 
-    " End.Formatting }}}
-
-    " Macros ---------------------------------------------------          {{{
+Macros
+------
 
     " Image ....................................................          {{{
     inoremap <buffer> <localleader>img image:[]<Left>
@@ -170,9 +148,14 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     vnoremap <buffer> <LocalLeader>inc :<C-U>AdocInsertMacroVisualTarget v block include<CR>
     " End.Include}}}
 
-    " End.Macros }}}
+    " Link .................................................          {{{
+    nnoremap <buffer> <LocalLeader>link :AdocInsertMacroVisualTarget n inline link<CR>
+    vnoremap <buffer> <LocalLeader>link :<C-U>AdocInsertMacroVisualTarget v inline link<CR>
+    " End.Link }}}
 
-    " Block ------------------------------------------------          {{{
+
+Block
+-----
 
     " code block
     inoremap <buffer> <localleader>code <Esc>:AdocInsertParagraph i ---- source<CR>
@@ -219,7 +202,8 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     nnoremap <buffer> <localleader>verse :AdocInsertParagraph n ____ verse author source<CR>
     vnoremap <buffer> <localleader>verse :<C-U>AdocInsertParagraph v ____ verse author source<CR>
 
-    " Admonition -------------------------------------------          {{{
+Admonition
+----------
 
     " caution
     inoremap <buffer> <localleader>caution <Esc>:AdocInsertParagraph i -- CAUTION<CR>
@@ -246,13 +230,12 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     nnoremap <buffer> <localleader>warning :AdocInsertParagraph n -- WARNING<CR>
     vnoremap <buffer> <localleader>warning :<C-U>AdocInsertParagraph v -- WARNING<CR>
 
-    " End.Admonition }}}
+    " TODO: other blocks, like abstract, graphviz, latex, music, partintro
 
-    " TODO: abstract, graphviz, latex, music, partintro
 
-    " End.Block }}}
+Table
+-----
 
-    " Table ------------------------------------------------          {{{
     inoremap <buffer> <localleader>table <Esc>:AdocInsertTable i<CR>
     nnoremap <buffer> <localleader>table :AdocInsertTable n<CR>
     vnoremap <buffer> <localleader>table :<C-U>AdocInsertTable v<CR>
@@ -266,7 +249,9 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     nnoremap <buffer> <LocalLeader>opts :call asciidoc#table#insert_attributes('options')<CR>
     " End.Table }}}
 
-    " Other ------------------------------------------------          {{{
+
+Other
+-----
 
     " Create xref ..........................................          {{{
     vnoremap <buffer> <LocalLeader>xr :<C-U>AdocInsertXref v<CR>
@@ -280,9 +265,8 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
 
     " End.Other }}}
 
-endif
-
-" End.Editing }}}
+==============================================================================
+5. Commands						*adoc-commands*
 
 command! -buffer AdocToggleQuickIter call asciidoc#compiler#quick_iter()
 command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#base#sentence_per_line(<f-args>)
@@ -294,7 +278,22 @@ command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cu
 command! -buffer -nargs=1 AdocInsertXref call asciidoc#base#create_xref(<f-args>)
 command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-args>)
 
-let &cpo = s:save_cpo
-unlet s:save_cpo
+==============================================================================
+6. Options						*adoc-options*
 
-" vim: set fdm=marker:
+    setlocal commentstring=//\ %s
+    setlocal comments=fl:////,://,fbn:*,fbn:.
+    setlocal formatoptions=tcqjnro
+    let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
+    setlocal spell
+    setlocal spelllang=en
+
+==============================================================================
+7. Disable defaults					*adoc-disable*
+
+To disable the default mappings, set `g:asciidoc_use_defaults` to an empty
+list before the plugin is loaded. To disable some components, list them.
+
+    let g:asciidoc_use_defaults = []
+
+ vim:tw=78:ts=8:sw=8:noet:ft=help:norl:

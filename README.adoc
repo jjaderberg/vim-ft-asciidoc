@@ -44,8 +44,8 @@ If you are concerned about having your configuration overridden by a plugin, I s
 
 == Failures
 
-. No help file.
-  If you don't find the relevant information below or in the code, just keep pressing keys and see what happens.
+. Incomplete help.
+  A first iteration is there, but plenty of work before it's up to snuff.
 . Bias.
 .. I use the link:http://www.asciidoctor.org[asciidoctor] processor and abide by a company style guide.
    This informs how the plugin works.
@@ -485,6 +485,7 @@ For navigating between headers, use the kbd:[\]\]] and kbd:[[[] motions.
 
 
 === Jump around
+
 Vim has excellent support for navigating between files, including the `gf` command to edit a file whose name is the text under the cursor.
 Similarly, with `ctags` or `cscope`, navigating different references between files is a breeze.
 With AsciiDoc, there are cases where these don't work well, however.
