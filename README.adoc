@@ -30,6 +30,7 @@ If you are concerned about having your configuration overridden by a plugin, I s
 ** One sentence per line
 ** Insert blocks (code, quote, NOTE, etc.)
 ** Format text (_words_ and c**har**s)
+** Change/delete/yank document sections.
 ** Insert macros (kbd, image, include, etc.)
 ** Insert cross references
 * Set `'makeprg'` for easy compiling (with `asciidoctor`, minimal support for parameters through buffer local variables.)
@@ -66,6 +67,7 @@ Editing support includes:
 * Insert different kinds of paragraphs (blocks).
 * Format text.
 * Insert tables.
+* Operate on sections.
 * Insert macros and cross references.
 
 [IMPORTANT]
@@ -313,7 +315,7 @@ Paragraph.
 Indeed.
 ....
 
-For visually selections, the lines will be put into the table.
+For visual selections, the lines will be put into the table.
 Newline padding is added above and below, as needed.
 Selecting the two first lines in _before_ and typing kbd:[+,table+] will result in:
 
@@ -329,6 +331,23 @@ Indeed.
 ....
 
 These are the very basics of beginning to work with tables.
+
+
+[[editing-motions]]
+=== Motions
+
+The cursor motions kbd:[\]\]] and kbd:[[[] move forward and backward to section titles.
+These motions can be used with all the ordinary Vim operators, allowing them to operate over document sections.
+
+.Examples of operations over sections
+[cols="1,3"]
+|===
+| kbd:[c\]\]]      | Change from cursor to end of section.
+| kbd:[d2\]\]]     | Delete from cursor to end of section and the following section.
+| kbd:[y[[]        | Yank from cursor to beginning of section.
+| kbd:[+[[v+\]\]]  | Visually select the whole current section.
+| kbd:[\]\]g?\]\]] | ROT13-encode the section following the current section.
+|===
 
 
 === Macros
@@ -432,6 +451,7 @@ If you fork and edit the plugin to handle this more gracefully, please consider 
 
 == Navigating
 
+
 === Preview file
 To preview the file being edited in an external application, type kbd:[+,pf+].
 This will run an `!open` command for the current file and ask application `g:asciidoc_preview_app` to open the current file.
@@ -439,6 +459,13 @@ This will run an `!open` command for the current file and ask application `g:asc
 The preview command is not very portable, especially since the preview application is hard coded to be Firefox.
 If you don't use Firefox and asciidoctor.js for previewing, then you should change or not use this feature.
 (If you improve it, consider issuing a PR!)
+
+
+=== Motions
+
+For navigating between headers, use the kbd:[\]\]] and kbd:[[[] motions.
+(These are valid for other operators as well, see <<editing-motions, Editing->Motions>>.
+
 
 === Jump around
 Vim has excellent support for navigating between files, including the `gf` command to edit a file whose name is the text under the cursor.

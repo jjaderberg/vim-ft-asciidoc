@@ -1,5 +1,5 @@
 " Vim autoload file
-" vim-ft-asciidoc/autoload/asciidoc.vim
+" vim-ft-asciidoc/autoload/base.vim
 
 function! asciidoc#base#follow_cursor_link(...) abort " {{{
     let [type, link] = asciidoc#base#get_cursor_link()
@@ -386,3 +386,14 @@ function! s:escape_macro_target(target) abort " {{{
     return substitute(a:target, ' ', '%20', 'g')
 endfunc " }}}
 
+function! asciidoc#base#custom_jump(motion) range
+    let cnt = v:count1
+    let save_search = @/
+    mark '
+    while cnt > 0
+        silent! execute a:motion
+        let cnt = cnt - 1
+    endwhile
+    call histdel('/', -1)
+    let @/ = save_search
+endfunction

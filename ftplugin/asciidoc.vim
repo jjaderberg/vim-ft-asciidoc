@@ -11,6 +11,9 @@
 " endif
 " let b:did_plugin = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 if !exists('g:asciidoc_use_defaults')
     let g:asciidoc_use_defaults = [
                 \ 'folding',
@@ -78,6 +81,13 @@ if -1 < match(g:asciidoc_use_defaults, 'navigating')
     nnoremap <buffer> ,<C-W>f :AdocFollowLinkUnderCursor split<CR>
     nnoremap <buffer> ,<C-W><C-F> :AdocFollowLinkUnderCursor vsplit<CR>
     nnoremap <buffer> ,<C-W>gf :AdocFollowLinkUnderCursor tabedit<CR>
+
+    " Motions
+    " Next/Previous section title
+    nnoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
+    onoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
+    nnoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
+    onoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
 endif
 " End.Navigating }}}
 
@@ -277,5 +287,8 @@ command! -buffer -nargs=+ AdocInsertMacroVisualAttribs call asciidoc#base#insert
 command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cursor_link(<f-args>)
 command! -buffer -nargs=1 AdocInsertXref call asciidoc#base#create_xref(<f-args>)
 command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-args>)
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
 
 " vim: set fdm=marker:
