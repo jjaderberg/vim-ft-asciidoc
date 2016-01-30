@@ -150,12 +150,17 @@ function! asciidoc#base#follow_link(link, kind, ...) " {{{
         endif
         let file = ""
         if link =~ '#'
-            let [file, anchor] = split(link, '#')
+            let target = split(link, '#')
+            let file = target[0]
+            let anchor = len(target) > 1 ? target[1] : ""
             if file !~ '/'
                 let file = expand("%:p:h") . "/" . file
             endif
             if filereadable(file)
-                let cmd .= file . '| /\[\[' . anchor . ']]'
+                let cmd .= file
+                if anchor
+                    let cmd .= '| /\[\[' . anchor . ']]'
+                endif
             else
                 let yn = input("File " . file . " does not exist. Edit it anyway? (y/n) ")
                 if yn == 'y'
@@ -190,7 +195,7 @@ function! asciidoc#base#insert_macro_attribs(mode, type, name) abort " {{{
     let save_reg = getreg('a', 1, 1)
     let save_reg_type = getregtype('a')
     let save_search = @/
-    let viz_eol = col("'>") < (col("$") - 1)
+    let viz_eol = a:mode != 'n' && col("'>") < (col("$") - 1)
     if a:mode == 'n'
         let @/ = get(g:asciidoc_patterns, a:name, '\w*\%#\w*')
         execute 'normal! gn"ad'
