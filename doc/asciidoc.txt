@@ -56,6 +56,11 @@ available, doing "compile on save". Toggle this facility on and off with
 ==============================================================================
 3. Navigating						*adoc-navigating*
 
+AdocVim provides means of navigation. First, to preview the file edited in the
+current buffer. Second, to follow links such as cross references within the
+current file or within other AsciiDoc files, links to websites, images and
+more; finally, navigation within the current document structure.
+
     " Preview asciidoc file with `g:asciidoc_preview_app` application
     nnoremap <buffer> <localleader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
 
@@ -75,8 +80,8 @@ available, doing "compile on save". Toggle this facility on and off with
 ==============================================================================
 4. Editing						*adoc-editing*
 
-Formatting
-----------
+4.1 Formatting						*adoc-formatting*
+--------------
 
 
     " strong
@@ -117,8 +122,8 @@ Formatting
 
     " End.Asymmetric }}}
 
-Macros
-------
+4.2 Macros						*adoc-macros*
+----------
 
     " Image ....................................................          {{{
     inoremap <buffer> <localleader>img image:[]<Left>
@@ -148,14 +153,8 @@ Macros
     vnoremap <buffer> <LocalLeader>inc :<C-U>AdocInsertMacroVisualTarget v block include<CR>
     " End.Include}}}
 
-    " Link .................................................          {{{
-    nnoremap <buffer> <LocalLeader>link :AdocInsertMacroVisualTarget n inline link<CR>
-    vnoremap <buffer> <LocalLeader>link :<C-U>AdocInsertMacroVisualTarget v inline link<CR>
-    " End.Link }}}
-
-
-Block
------
+4.3 Blocks						*adoc-blocks*
+----------
 
     " code block
     inoremap <buffer> <localleader>code <Esc>:AdocInsertParagraph i ---- source<CR>
@@ -202,8 +201,8 @@ Block
     nnoremap <buffer> <localleader>verse :AdocInsertParagraph n ____ verse author source<CR>
     vnoremap <buffer> <localleader>verse :<C-U>AdocInsertParagraph v ____ verse author source<CR>
 
-Admonition
-----------
+4.4 Admonitions						*adoc-admonition*
+---------------
 
     " caution
     inoremap <buffer> <localleader>caution <Esc>:AdocInsertParagraph i -- CAUTION<CR>
@@ -233,8 +232,8 @@ Admonition
     " TODO: other blocks, like abstract, graphviz, latex, music, partintro
 
 
-Table
------
+4.5 Tables						*adoc-tables*
+----------
 
     inoremap <buffer> <localleader>table <Esc>:AdocInsertTable i<CR>
     nnoremap <buffer> <localleader>table :AdocInsertTable n<CR>
@@ -250,8 +249,8 @@ Table
     " End.Table }}}
 
 
-Other
------
+4.6 Other						*adoc-other*
+---------
 
     " Create xref ..........................................          {{{
     vnoremap <buffer> <LocalLeader>xr :<C-U>AdocInsertXref v<CR>
@@ -263,7 +262,13 @@ Other
     vnoremap <buffer> <localleader>spl :<C-U>AdocSentencePerLine v<CR>
     " End.One sentence per line }}}
 
-    " End.Other }}}
+Toggle title						*adoc-toggle-title*
+It is recommended to use the ATX style for titles rather than the Setex style.
+Both are valid AsciiDoc, however, and whether one chooses to go against
+recommendation, or is working with source created by others, it can be useful
+to toggle between the two styles.  Typing kbd:[+,tt+] will toggle the title of
+the current section between the two styles.
+
 
 ==============================================================================
 5. Commands						*adoc-commands*

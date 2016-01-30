@@ -33,6 +33,7 @@ If you are concerned about having your configuration overridden by a plugin, I s
 ** Change/delete/yank document sections.
 ** Insert macros (kbd, image, include, etc.)
 ** Insert cross references
+** Toggle title (ATX/SetExt style)
 * Set `'makeprg'` for easy compiling (with `asciidoctor`, minimal support for parameters through buffer local variables.)
 * Support compile on save
 * Basic folding support
@@ -106,10 +107,12 @@ It therefore usually works just fine to do this on a formatted block.
 The operation may fail to recognize the boundaries of some paragraph, or you may want to format part of a paragraph.
 In this case, visually select the lines to format and the operation will limit itself to these lines.
 
+
 === Blocks
 
 Work with different kinds of paragraphs/blocks.
 Insert a new code block, or turn a sentence or paragraph into a quote or admonition.
+
 
 ==== Insert paragraphs/blocks
 
@@ -286,6 +289,7 @@ The plugin includes some table support:
 * Operate on tables as text objects kbd:[+,it+] kbd:[+,at+].
 * Add attributes to existing table.
 
+
 ==== Insert table
 
 Similar to blocks, tables can be inserted with kbd:[+,table+].
@@ -435,6 +439,13 @@ The operation does some substitutions on the input to generate a valid ref targe
 The input text remains and is now the name of the reference.
 
 
+=== Toggle title
+
+It is recommended to use the ATX style for titles rather than the Setex style.
+Both are valid AsciiDoc, however, and whether one chooses to go against recommendation, or is working with source created by others, it can be useful to toggle between the two styles.
+Typing kbd:[+,tt+] will toggle the title of the current section between the two styles.
+
+
 == Compiling
 
 The plugin sets up Vim's `'makeprg'` to use `asciidoctor`.
@@ -470,6 +481,7 @@ If you fork and edit the plugin to handle this more gracefully, please consider 
 
 
 === Preview file
+
 To preview the file being edited in an external application, type kbd:[+,pf+].
 This will run an `!open` command for the current file and ask application `g:asciidoc_preview_app` to open the current file.
 
