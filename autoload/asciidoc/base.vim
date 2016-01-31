@@ -412,7 +412,7 @@ function! s:escape_macro_target(target) abort " {{{
     return substitute(a:target, ' ', '%20', 'g')
 endfunc " }}}
 
-function! asciidoc#base#custom_jump(motion) range " {{{
+function! asciidoc#base#custom_jump(motion, visual) range " {{{
     let cnt = v:count1
     let save_search = @/
     mark '
@@ -421,5 +421,10 @@ function! asciidoc#base#custom_jump(motion) range " {{{
         let cnt = cnt - 1
     endwhile
     call histdel('/', -1)
+    if (a:visual)
+        let save_pos = getcurpos()
+        normal! ''V
+        call setpos('.', save_pos)
+    endif
     let @/ = save_search
 endfunction "}}}

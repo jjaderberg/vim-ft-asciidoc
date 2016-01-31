@@ -100,12 +100,19 @@ if -1 < match(g:asciidoc_use_defaults, 'navigating')
     nnoremap <buffer> ,<C-W><C-F> :AdocFollowLinkUnderCursor vsplit<CR>
     nnoremap <buffer> ,<C-W>gf :AdocFollowLinkUnderCursor tabedit<CR>
 
-    " Motions
-    " Next/Previous section title
-    nnoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
-    onoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
-    nnoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
-    onoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
+    " Section motions
+    nnoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w', 0)<CR>
+    vnoremap <buffer> <silent> ]] :<C-U>call asciidoc#base#custom_jump('/^=\{1,6} \w', 1)<CR>
+    onoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w', 0)<CR>
+    nnoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w', 0)<CR>
+    vnoremap <buffer> <silent> [[ :<C-U>call asciidoc#base#custom_jump('?^=\{1,6} \w', 1)<CR>
+    onoremap <buffer> <silent> [[ :<call asciidoc#base#custom_jump('?^=\{1,6} \w', 0)<CR>
+    nnoremap <buffer> <silent> ][ :call asciidoc#base#custom_jump('/\n=\{1,6} \w', 0)<CR>
+    vnoremap <buffer> <silent> ][ :<C-U>call asciidoc#base#custom_jump('/\n=\{1,6} \w', 1)<CR>
+    onoremap <buffer> <silent> ][ :call asciidoc#base#custom_jump('/\n=\{1,6} \w', 0)<CR>
+    nnoremap <buffer> <silent> [] :call asciidoc#base#custom_jump('?\n=\{1,6} \w', 0)<CR>
+    vnoremap <buffer> <silent> [] :<C-U>call asciidoc#base#custom_jump('?\n=\{1,6} \w', 1)<CR>
+    onoremap <buffer> <silent> [] :call asciidoc#base#custom_jump('?\n=\{1,6} \w', 0)<CR>
 endif
 " End.Navigating }}}
 

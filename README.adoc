@@ -363,11 +363,12 @@ These motions can be used with all the ordinary Vim operators, allowing them to 
 .Examples of operations over sections
 [cols="1,3"]
 |===
-| kbd:[c\]\]]      | Change from cursor to end of section.
-| kbd:[d2\]\]]     | Delete from cursor to end of section and the following section.
-| kbd:[y[[]        | Yank from cursor to beginning of section.
-| kbd:[+[[v+\]\]]  | Visually select the whole current section.
-| kbd:[\]\]g?\]\]] | ROT13-encode the section following the current section.
+| kbd:[c\][]      | Change from cursor to end of section.
+| kbd:[d2\][]     | Delete from cursor to end of section and the following section.
+| kbd:[y[[]       | Yank from cursor to beginning of section.
+| kbd:[[\]d[[]    | Delete the previous section.
+| kbd:[+[[v+\][]  | Visually select the whole current section.
+| kbd:[\]\]g?\][] | ROT13-encode the section following the current section.
 |===
 
 
@@ -492,8 +493,10 @@ If you don't use Firefox and asciidoctor.js for previewing, then you should chan
 
 === Motions
 
-For navigating between headers, use the kbd:[\]\]] and kbd:[[[] motions.
-(These are valid for other operators as well, see <<editing-motions, Editing->Motions>>.
+For navigating between titles, use the kbd:[\]\]] and kbd:[[[] motions.
+These move to the next and previous section titles, respectively.
+kbd:[\][] and kbd:[[\]] move to next and previous section end.
+These motions can be used with operators, see <<editing-motions, Editing: Motions>>.
 
 
 === Jump around
