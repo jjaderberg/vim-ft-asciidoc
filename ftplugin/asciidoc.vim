@@ -54,9 +54,14 @@ let g:atx_to_setext = {
 if -1 < match(g:asciidoc_use_defaults, 'options')
     let g:asciidoc_browser = "Firefox"
     let g:asciidoc_preview_app = "Firefox"
+    if !exists(g:asciidoc_debug_level)
+        let g:asciidoc_debug_level = 0
+    endif
 
     setlocal commentstring=//\ %s
-    setlocal comments=fl:////,://
+    setlocal comments=fl:////,://,fbn:*,fbn:.
+    setlocal formatoptions=tcqjnro
+    let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
     setlocal spell
     setlocal spelllang=en
 endif

@@ -387,21 +387,24 @@ function! s:escape_linkname(unsub) abort " {{{
     return sub
 endfunc " }}}
 
-function! asciidoc#base#soft_linebreak() "{{{
+function! asciidoc#base#soft_linebreak() abort "{{{
     let syntax_name = synIDattr(synID(line('.'), col('.'), 1), "name")
-    " let syntax_name = synIDattr(synID(line('.'), col('.'), 0), "name")
-    let apa = syntax_name =~? "table"
-    echo syntax_name
-    echo apa
     let save_reg = @"
     let save_search = @/
     if syntax_name =~? "table"
         normal! o| 
     elseif syntax_name =~? "list"
-        let line = getline('.')
-        let list_prefix = matchstr(line, "[1-9*.]\{,6}")
-        let @" = list_prefix
-        execute "normal! o\<Esc>p$a"
+        let @" = ""
+        normal! lD
+        call append(line('.'), @")
+        let line = getline(line('.'))
+        let list_prefix = matchstr(line, '[1-9*.]\{,6}')
+        let @" = list_prefix . " "
+        normal! j0P$
+    else
+        if g:asciidoc_debug_level > 0
+            echo "Don't know what to do with syntax_name (" . syntax_name . ")"
+        endif
     endif
     let @/ = save_search
     let @" = save_reg
