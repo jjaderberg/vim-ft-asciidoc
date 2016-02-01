@@ -34,6 +34,7 @@ If you are concerned about having your configuration overridden by a plugin, I s
 ** Insert macros (kbd, image, include, etc.)
 ** Insert cross references
 ** Toggle title (ATX/SetExt style)
+** Support for working with tables and lists
 * Set `'makeprg'` for easy compiling (with `asciidoctor`, minimal support for parameters through buffer local variables.)
 * Support compile on save
 * Basic folding support
@@ -67,7 +68,7 @@ Editing support includes:
 * Turn a paragraph into one-sentence-per-line.
 * Insert different kinds of paragraphs (blocks).
 * Format text.
-* Insert tables.
+* Insert and edit tables.
 * Operate on sections.
 * Insert macros and cross references.
 

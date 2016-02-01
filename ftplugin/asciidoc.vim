@@ -49,12 +49,13 @@ let g:atx_to_setext = {
             \ '=====': '+',
             \ }
 
+"}}}
 
 " Options ==================================================          {{{
 if -1 < match(g:asciidoc_use_defaults, 'options')
     let g:asciidoc_browser = "Firefox"
     let g:asciidoc_preview_app = "Firefox"
-    if !exists(g:asciidoc_debug_level)
+    if !exists('g:asciidoc_debug_level')
         let g:asciidoc_debug_level = 0
     endif
 
