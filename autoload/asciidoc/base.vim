@@ -282,14 +282,19 @@ endfunc " }}}
 
 function! asciidoc#base#insert_paragraph(mode, delim, ...) abort " {{{
     let delim = a:delim
-    let line = line('.')
-    if a:mode == 'i'
-        execute "normal! i".delim."\<CR>\<CR>".delim."\<CR>\<Esc>2k"
-    elseif a:mode == 'n'
-        execute "normal! O".delim."\<Down>\<C-O>o".delim."\<Esc>k0"
+    if a:mode == 'i' || a:mode == 'n'
+        let line_before = line('.') - 1
+        let line_after = line('.')
+        let append_before = getline(line('.') - 1) == "" ? [delim] : ["", delim]
+        let append_after = getline(line('.') + 1) == "" ? [delim] : [delim, ""]
     elseif a:mode == 'v'
-        execute "normal! \<Esc>`>o".delim."\<Esc>`<O".delim."\<Esc>j0"
+        let line_before = line("'<") - 1
+        let line_after = line("'>")
+        let append_before = getline(line("'<'") - 1) == "" ? [delim] : ["", delim]
+        let append_after = getline(line("'>") + 1) == "" ? [delim] : [delim, ""]
     endif
+    call append(line_after, append_after)
+    call append(line_before, append_before)
     if a:0
         let cmd = "normal! 2ko["
         for ix in range(0, len(a:000) - 1)
