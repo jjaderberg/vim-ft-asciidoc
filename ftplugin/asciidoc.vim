@@ -313,6 +313,14 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     vnoremap <buffer> <LocalLeader>spl :<C-U>AdocSentencePerLine v<CR>
     " End.One sentence per line }}}
 
+    " Toggle Title .........................................          {{{
+    nnoremap <buffer> <LocalLeader>tt :call asciidoc#editing#toggle_title()<CR>
+    " End.Toggle Title }}}
+
+    " Context sensitive line break {{{
+    inoremap <buffer> <S-CR> <Esc>:call asciidoc#base#soft_linebreak()<CR>
+    " End.Context sensitive line break }}}
+
     " End.Other }}}
 
 endif

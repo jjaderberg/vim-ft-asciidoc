@@ -10,8 +10,26 @@ I need a better name for this plugin. Like with most things, you can't reason
 about them well until you give them names.
 Let's experiment below, and see if a name sticks.
 
+|1.|	Folding
+|2.|	Compiling
+|3.|	Navigating
+|3.1|	Preview
+|3.2|	Follow link
+|3.3|	Sections
+|4.|	Editing
+|4.1|	Formatting
+|4.2|	Macros
+|4.3|	Blocks
+|4.4|	Admonitions
+|4.5|	Tables
+|4.6|	Other
+|5.|	Commands
+|6.|	Options
+|7.|	Disable defaults
+
+
 ==============================================================================
-1. Folding						*adoc-folding*
+*1.* Folding						*adoc-folding*
 
 VimsciDoc provides folding facilities with a simple fold expression function.
 It folds ATX-style section titles. If syntax is off or an unreasonable syntax
@@ -19,29 +37,29 @@ file is used, the fold expression may be too eager. It will not fold example
 blocks, which is the case for the few fold expressions I've seen floating
 about. It will, however, fold section titles within literal and listing
 blocks. If syntax is on and a reasonable syntax file is used, the fold
-expression will verify that the line that looks like title is interpreted as a
-title by the syntax file, and avoid these mistakes.
+expression will verify that the line that looks like a title is also interpreted
+as a title by the syntax file, and avoid these mistakes.
 
 The following happens in `ftplugin/asciidoc.vim` with regards to folding.
-
+>
     setlocal foldexpr=asciidoc#folding#foldexpr(v:lnum)
     setlocal foldmethod=expr
     setlocal foldlevel=1
-
+<
 If the folding does not work as expected, consider uncommenting the following
 lines to provide some simple local mappings for debugging.
-
+>
     " nnoremap <buffer> ,fe :echo asciidoc#folding#foldexpr(line('.'))<CR>
     " nnoremap <buffer> ,fl :echo foldlevel('.')<CR>
     " nnoremap <buffer> ,fm :echo match(getline('.'), '=')<CR>
-
+<
 ==============================================================================
-2. Compiling						*adoc-compiling*
+*2.* Compiling						*adoc-compiling*
 
 AsciiVimDoc has some very simple and parochial compiler plugin features. It
-will assume that the user wants to use the Asciidoctor processor, and that it
-is installed on Path. It is possible to set some very limited options for the
-processor by setting buffer local variables. |buffer-variable|
+assumes that the user wants to use the Asciidoctor processor, and that
+Asciidoctor is on system path. It is possible to set a limited number of options
+for the processor by setting buffer local variables. |buffer-variable|
 
 Available buffer local variables~
 
@@ -54,15 +72,27 @@ available, doing "compile on save". Toggle this facility on and off with
 `:AdocToggleQuickIter`. Default binding is `<LocalLeader>qi`.
 
 ==============================================================================
-3. Navigating						*adoc-navigating*
+*3.* Navigating						*adoc-navigating*
 
 AdocVim provides means of navigation. First, to preview the file edited in the
 current buffer. Second, to follow links such as cross references within the
 current file or within other AsciiDoc files, links to websites, images and
 more; finally, navigation within the current document structure.
 
+
+*3.1* Preview {parochial}
+-----------
+
+By setting the variable `g:asciidoc_preview_app` to an application able to
+render AsciiDoc on the fly, the normal mode {<LocalLeader>of} map can be used
+to open the current file in the external application.
+
     " Preview asciidoc file with `g:asciidoc_preview_app` application
     nnoremap <buffer> <localleader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
+
+
+*3.2* Follow link
+---------------
 
     " Follow link under cursor
     nnoremap <buffer> <LocalLeader>gf :AdocFollowLinkUnderCursor edit<CR>
@@ -70,17 +100,17 @@ more; finally, navigation within the current document structure.
     nnoremap <buffer> <LocalLeader><C-W><C-F> :AdocFollowLinkUnderCursor vsplit<CR>
     nnoremap <buffer> <LocalLeader><C-W>gf :AdocFollowLinkUnderCursor tabedit<CR>
 
-    " Motions
-    " Next/Previous section title, see |]]| and |[[|
-    nnoremap <buffer> <silent> ]] :call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
-    onoremap <buffer> <silent> ]] :<C-U>call asciidoc#base#custom_jump('/^=\{1,6} \w')<CR>
-    nnoremap <buffer> <silent> [[ :call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
-    onoremap <buffer> <silent> [[ :<C-U>call asciidoc#base#custom_jump('?^=\{1,6} \w')<CR>
+
+*3.3* Sections
+------------
+
+Move forward to beginning of section with |]]| and backward with |[[|.
+Move forward to end of section with |][| and backward with |[]|.
 
 ==============================================================================
-4. Editing						*adoc-editing*
+*4.* Editing						*adoc-editing*
 
-4.1 Formatting						*adoc-formatting*
+*4.1* Formatting					*adoc-formatting*
 --------------
 
 
@@ -122,7 +152,7 @@ more; finally, navigation within the current document structure.
 
     " End.Asymmetric }}}
 
-4.2 Macros						*adoc-macros*
+*4.2* Macros						*adoc-macros*
 ----------
 
     " Image ....................................................          {{{
@@ -153,7 +183,7 @@ more; finally, navigation within the current document structure.
     vnoremap <buffer> <LocalLeader>inc :<C-U>AdocInsertMacroVisualTarget v block include<CR>
     " End.Include}}}
 
-4.3 Blocks						*adoc-blocks*
+*4.3* Blocks						*adoc-blocks*
 ----------
 
     " code block
@@ -201,7 +231,7 @@ more; finally, navigation within the current document structure.
     nnoremap <buffer> <localleader>verse :AdocInsertParagraph n ____ verse author source<CR>
     vnoremap <buffer> <localleader>verse :<C-U>AdocInsertParagraph v ____ verse author source<CR>
 
-4.4 Admonitions						*adoc-admonition*
+*4.4* Admonitions						*adoc-admonition*
 ---------------
 
     " caution
@@ -232,7 +262,7 @@ more; finally, navigation within the current document structure.
     " TODO: other blocks, like abstract, graphviz, latex, music, partintro
 
 
-4.5 Tables						*adoc-tables*
+*4.5* Tables						*adoc-tables*
 ----------
 
     inoremap <buffer> <localleader>table <Esc>:AdocInsertTable i<CR>
@@ -249,7 +279,7 @@ more; finally, navigation within the current document structure.
     " End.Table }}}
 
 
-4.6 Other						*adoc-other*
+*4.6* Other						*adoc-other*
 ---------
 
     " Create xref ..........................................          {{{
@@ -271,7 +301,7 @@ the current section between the two styles.
 
 
 ==============================================================================
-5. Commands						*adoc-commands*
+*5.* Commands						*adoc-commands*
 
 command! -buffer AdocToggleQuickIter call asciidoc#compiler#quick_iter()
 command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#base#sentence_per_line(<f-args>)
@@ -284,7 +314,7 @@ command! -buffer -nargs=1 AdocInsertXref call asciidoc#base#create_xref(<f-args>
 command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-args>)
 
 ==============================================================================
-6. Options						*adoc-options*
+*6.* Options						*adoc-options*
 
     setlocal commentstring=//\ %s
     setlocal comments=fl:////,://,fbn:*,fbn:.
@@ -294,7 +324,7 @@ command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-arg
     setlocal spelllang=en
 
 ==============================================================================
-7. Disable defaults					*adoc-disable*
+*7.* Disable defaults					*adoc-disable*
 
 To disable the default mappings, set `g:asciidoc_use_defaults` to an empty
 list before the plugin is loaded. To disable some components, list them.
