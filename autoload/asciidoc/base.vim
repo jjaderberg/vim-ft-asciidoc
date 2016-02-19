@@ -310,6 +310,8 @@ function! asciidoc#base#insert_paragraph(mode, delim, ...) abort " {{{
             let cmd .= "2j0"
         endif
         execute cmd
+        " if len(a:000) == 1 | startinsert | endif
+        if a:mode == 'i' | startinsert | endif
     endif
 endfunc " }}}
 
@@ -436,3 +438,4 @@ function! asciidoc#base#custom_jump(motion, visual) range " {{{
     endif
     let @/ = save_search
 endfunction "}}}
+

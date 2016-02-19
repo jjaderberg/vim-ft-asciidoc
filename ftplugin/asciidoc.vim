@@ -14,6 +14,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Dicts {{{
 if !exists('g:asciidoc_use_defaults')
     let g:asciidoc_use_defaults = [
                 \ 'folding',
@@ -31,6 +32,18 @@ let g:asciidoc_patterns = {
             \ 'menu': '\S*\%#\S*',
             \ 'btn': '\S*\%#\S*',
             \ 'title': '^=\{1,6} \w',
+            \ }
+
+let g:asciidoc_blocks = {
+            \ '/': '////',
+            \ '=': '====',
+            \ '-': '----',
+            \ '.': '....',
+            \ '+': '++++',
+            \ '*': '****',
+            \ 'o': '--',
+            \ 'q': '____',
+            \ 'v': '____',
             \ }
 
 let g:setext_to_atx = {
@@ -327,6 +340,13 @@ endif
 
 " End.Editing }}}
 
+" Experimental =============================================          {{{
+
+nnoremap <buffer> <LocalLeader>bl :set opfunc=asciidoc#experimental#block_operator<CR>g@
+
+" }}}
+
+" Commands =================================================          {{{
 command! -buffer AdocToggleQuickIter call asciidoc#compiler#quick_iter()
 command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#base#sentence_per_line(<f-args>)
 command! -buffer -nargs=+ AdocInsertParagraph call asciidoc#base#insert_paragraph(<f-args>)
@@ -336,6 +356,7 @@ command! -buffer -nargs=+ AdocInsertMacroVisualAttribs call asciidoc#base#insert
 command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cursor_link(<f-args>)
 command! -buffer -nargs=1 AdocInsertXref call asciidoc#base#create_xref(<f-args>)
 command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-args>)
+" }}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

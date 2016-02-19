@@ -42,6 +42,7 @@ If you are concerned about having your configuration overridden by a plugin, I s
 ** Follow cross references
 ** Follow external links
 * Set basic options, like the correct `'commentstring'`.
+* _Experimental_: block formatting by motions
 
 
 == Failures
@@ -582,6 +583,33 @@ It should be easy to set that up properly, but it's not a priority for me at the
 | ... a vertical split or browser                        | kbd:[+,<C-W><C-F>+]
 | ... a new tab or browser                               | kbd:[+,<C-W>gf+]
 |============================================================================
+
+
+[[experimental]]
+== Experimental
+
+Experimental features that may or may note mature.
+
+
+[[block-operator]]
+=== Blocke operations by motion
+
+By typing kbd:[+,bl+] followed by a motion, the text encompassed by the motion can be formatted as a block.
+The command requests user input to determine which block type to produce:
+
+....
+'q': 'quote'
+'-': 'listing'
+'v': 'verse'
+'o': 'open'
+'*': 'sidebar'
+'+': 'passthrough'
+'=': 'example'
+'.': 'literal'
+'/': 'comment'
+....
+
+kbd:[+,blip/<CR>+] will format the _inner paragraph_ surrounding the cursor as a comment block.
 
 
 [[appendix-a]]
