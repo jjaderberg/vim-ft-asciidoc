@@ -61,6 +61,10 @@ function! asciidoc#base#sentence_per_line(mode) abort " {{{
     call setpos('.', save_cursor)
 endfunc " }}}
 
+function! asciidoc#base#strip(s) abort " {{{
+    return substitute(a:s, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunc " }}}
+
 function! asciidoc#base#format_text(fchar) abort " {{{
     let mode = visualmode()
     let save_reg = getreg('a', 1, 1)
