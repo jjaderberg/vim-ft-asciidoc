@@ -4,7 +4,7 @@
 function! asciidoc#experimental#block_operator(type, ...) abort "{{{
     " {{{
     let debug = []
-    let in = <SID>input()
+    let in = <SID>block_selection_input()
     let delim = g:asciidoc_blocks[in]
     let sel_save = &selection
     let &selection = "inclusive"
@@ -70,7 +70,63 @@ function! asciidoc#experimental#block_operator(type, ...) abort "{{{
 
 endfunc "}}}
 
-function! s:input() " {{{
+function! asciidoc#experimental#text_object_block(inner, visual) abort "{{{
+    " let delim = '\(' . substitute(join(values(g:asciidoc_blocks), '\|'), '\*', '\\\0', 'g') . '\)'
+    let in = <SID>block_selection_input()
+    let delim = g:asciidoc_blocks[in]
+    let delim = substitute(delim, '\.\|\*', '\\\0', 'g')
+    let bot = search('^' . delim, 'W')
+    if 0 > bot | return | endif
+    if a:inner
+        let bot = bot - 1
+        normal! k
+    elseif getline(bot + 1) =~ '^$'
+        let bot = bot + 1
+    endif
+    let top = search('^' . delim, 'bW')
+    if a:inner
+        normal! j
+    endif
+    normal! V
+    call cursor(bot, 0)
+    normal $
+    if g:asciidoc_debug_level | echo [top, bot] | endif
+endfunc "}}}
+
+function! asciidoc#experimental#delete_surround_block(withattrs) abort "{{{
+    let in = <SID>block_selection_input()
+    let delim = g:asciidoc_blocks[in]
+    let delim = substitute(delim, '\.\|\*', '\\\0', 'g')
+    echo "delim: " . delim
+    let bot = search(delim, 'W')
+    let top = search(delim, 'bW')
+
+    " remove delimiter at bot
+    execute bot . "delete"
+
+    " remove delimiter from top
+    execute top . "delete"
+
+    " if block has attributes or an anchor, remove them
+    if a:withattrs
+        let top = top - 1
+        if getline(top) =~ '\[[^]]*]\{1,2}'
+            execute top . "delete"
+        endif
+    endif
+
+    return [bot, top]
+endfunc "}}}
+
+function! asciidoc#experimental#change_surround_block() abort "{{{
+    let [bot, top] = asciidoc#experimental#delete_surround_block(0)
+    let in = <SID>block_selection_input()
+    let delim = g:asciidoc_blocks[in]
+    call append(bot - 2, delim)
+    call append(top - 1, delim)
+endfunc "}}}
+
+function! s:block_selection_input() " {{{
     let m = {
                 \ '/': 'comment',
                 \ '=': 'example',
@@ -88,3 +144,10 @@ function! s:input() " {{{
     endfor
     return input(input_msg)
 endfunc " }}}
+
+function! asciidoc#experimental#text_object_list_item(inner, visual) abort "{{{
+    let bot = search('^\*\|^$\|\%$', 'W') - 1
+    let top = search('^\*', 'bW')
+    execute "normal! V" . bot . 'G'
+    echo [top, bot]
+endfunc "}}}

@@ -42,7 +42,10 @@ If you are concerned about having your configuration overridden by a plugin, I s
 ** Follow cross references
 ** Follow external links
 * Set basic options, like the correct `'commentstring'`.
-* _Experimental_: block formatting by motions
+* _Experimental_
+** Block formatting by motions
+** Text objects for blocks and list items
+** Delete or change block delimiters (_surroundings_)
 
 
 == Failures
@@ -50,7 +53,7 @@ If you are concerned about having your configuration overridden by a plugin, I s
 . Incomplete help.
   A first iteration is there, but plenty of work before it's up to snuff.
 . Bias.
-.. I use the link:http://www.asciidoctor.org[asciidoctor] processor and abide by a company style guide.
+.. I use the link:http://www.asciidoctor.org[Asciidoctor] processor and abide by a company style guide.
    This informs how the plugin works.
 .. I mostly use a Mac with Vim 7.4.903 and Firefox.
    I have not really tested the plugin with other systems.
@@ -610,6 +613,21 @@ The command requests user input to determine which block type to produce:
 ....
 
 kbd:[+,blip/<CR>+] will format the _inner paragraph_ surrounding the cursor as a comment block.
+
+
+[[block-list-text-object]]
+=== Block and list text objects
+
+Doing kbd:[+c,ab+] changes a block, kbd:[+d,ib+] deletes inner block, kbd:[+v,il+] visually selects inner list item (useful for multi-line list items).
+
+
+[[block-surround]]
+=== Block surround (delimiter) operations
+
+There is also a poor man's _surround_ functionality for deleting or changing the delimiters of a block: kbd:[+,dsb+] and kbd:[+,csb+] respectively.
+
+The experimental block operations generally prompt for which type of block to work with.
+The _change block delimiters_ operation prompts twice: once for the removal and once for the replacement.
 
 
 [[appendix-a]]

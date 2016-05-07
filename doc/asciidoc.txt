@@ -94,6 +94,9 @@ to open the current file in the external application.
 *3.2* Follow link
 ---------------
 
+The 'include' options is set to `^include::`. This allows for using Vim's
+built-in |include-search| facilities, including |[i|, |]CTRL-I| etc.
+
     " Follow link under cursor
     nnoremap <buffer> <LocalLeader>gf :AdocFollowLinkUnderCursor edit<CR>
     nnoremap <buffer> <LocalLeader><C-W>f :AdocFollowLinkUnderCursor split<CR>
@@ -306,7 +309,7 @@ the current section between the two styles.
 command! -buffer AdocToggleQuickIter call asciidoc#compiler#quick_iter()
 command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#base#sentence_per_line(<f-args>)
 command! -buffer -nargs=+ AdocInsertParagraph call asciidoc#base#insert_paragraph(<f-args>)
-command! -buffer -nargs=1 AdocFormatText call asciidoc#base#format_text(<f-args>)
+command! -buffer -nargs=1 AdocFormatText call asciidoc#editing#format_text(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualTarget call asciidoc#base#insert_macro_target(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualAttribs call asciidoc#base#insert_macro_attribs(<f-args>)
 command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cursor_link(<f-args>)
@@ -317,11 +320,12 @@ command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-arg
 *6.* Options						*adoc-options*
 
     setlocal commentstring=//\ %s
-    setlocal comments=fl:////,://,fbn:*,fbn:.
+    setlocal comments=fl:////,://,fn:*,fn:.
     setlocal formatoptions=tcqjnro
     let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
     setlocal spell
     setlocal spelllang=en
+    setlocal include=^include::
 
 ==============================================================================
 *7.* Disable defaults					*adoc-disable*

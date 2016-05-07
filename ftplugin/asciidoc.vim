@@ -341,17 +341,11 @@ endif
 
 " End.Editing }}}
 
-" Experimental =============================================          {{{
-
-nnoremap <buffer> <LocalLeader>bl :set opfunc=asciidoc#experimental#block_operator<CR>g@
-
-" }}}
-
 " Commands =================================================          {{{
 command! -buffer AdocToggleQuickIter call asciidoc#compiler#quick_iter()
-command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#base#sentence_per_line(<f-args>)
+command! -buffer -nargs=1 AdocSentencePerLine call asciidoc#editing#sentence_per_line(<f-args>)
 command! -buffer -nargs=+ AdocInsertParagraph call asciidoc#base#insert_paragraph(<f-args>)
-command! -buffer -nargs=1 AdocFormatText call asciidoc#base#format_text(<f-args>)
+command! -buffer -nargs=1 AdocFormatText call asciidoc#editing#format_text(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualTarget call asciidoc#base#insert_macro_target(<f-args>)
 command! -buffer -nargs=+ AdocInsertMacroVisualAttribs call asciidoc#base#insert_macro_attribs(<f-args>)
 command! -buffer -nargs=? AdocFollowLinkUnderCursor call asciidoc#base#follow_cursor_link(<f-args>)
@@ -361,5 +355,24 @@ command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-arg
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+" Experimental =============================================          {{{
+
+nnoremap <buffer> <LocalLeader>bl :set opfunc=asciidoc#experimental#block_operator<CR>g@
+
+xnoremap <buffer> <silent> <LocalLeader>ib :<C-U>call asciidoc#experimental#text_object_block(1, 1)<CR>
+onoremap <buffer> <silent> <LocalLeader>ib :call asciidoc#experimental#text_object_block(1, 0)<CR>
+xnoremap <buffer> <silent> <LocalLeader>ab :<C-U>call asciidoc#experimental#text_object_block(0, 1)<CR>
+onoremap <buffer> <silent> <LocalLeader>ab :call asciidoc#experimental#text_object_block(0, 0)<CR>
+
+xnoremap <buffer> <silent> <LocalLeader>il :<C-U>call asciidoc#experimental#text_object_list_item(1, 1)<CR>
+onoremap <buffer> <silent> <LocalLeader>il :call asciidoc#experimental#text_object_list_item(1, 0)<CR>
+xnoremap <buffer> <silent> <LocalLeader>al :<C-U>call asciidoc#experimental#text_object_list_item(0, 1)<CR>
+onoremap <buffer> <silent> <LocalLeader>al :call asciidoc#experimental#text_object_list_item(0, 0)<CR>
+
+nnoremap <buffer> <silent> <LocalLeader>csb :call asciidoc#experimental#change_surround_block()<CR>
+nnoremap <buffer> <silent> <LocalLeader>dsb :call asciidoc#experimental#delete_surround_block(1)<CR>
+
+" }}}
 
 " vim: set fdm=marker:

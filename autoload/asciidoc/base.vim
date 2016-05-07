@@ -32,61 +32,8 @@ function! asciidoc#base#get_attribute(name) " {{{
     return res
 endfunc " }}}
 
-function! asciidoc#base#sentence_per_line(mode) abort " {{{
-    let save_cursor = getcurpos()
-    if a:mode == 'n'
-        let pat = '^$\|^[-_.*+=]\{2}'
-        let bot = search(pat, 'n') - 1
-        let top = search(pat, 'bn') + 1
-        if top != bot
-            execute ":" . top
-            execute 'normal! V' . (bot - top) . 'jJ0'
-        endif
-    elseif a:mode == 'v'
-        normal! VJ0
-    endif
-    while 1
-        let l = line('.')
-        normal! )
-        if l == line('.')
-            " `normal! b` will skip over some characters, better search back for
-            " first non-whitespace
-            " normal! blr
-            call search('\S', 'b')
-            normal! lr
-        else
-            break
-        endif
-    endwhile
-    call setpos('.', save_cursor)
-endfunc " }}}
-
 function! asciidoc#base#strip(s) abort " {{{
     return substitute(a:s, '^\s*\(.\{-}\)\s*$', '\1', '')
-endfunc " }}}
-
-function! asciidoc#base#format_text(fchar) abort " {{{
-    let mode = visualmode()
-    let save_reg = getreg('a', 1, 1)
-    let save_reg_type = getregtype('a')
-    let char = a:fchar
-    if mode == 'v'
-        let p1 = '\w\%' . col("'<") . 'c'
-        let p2 = '\%' . col("'>") . 'c.\w'
-        let m1 = match(getline("'<"), p1)
-        let m2 = match(getline("'>"), p2)
-        if -1 != m1 || -1 != m2
-            let char .= char
-        endif
-        " echo m1
-        " echo m2
-    endif
-    execute 'normal! gv"ay'
-    call setreg('a', '', 'ac')
-    let text = @a
-    let @a = char . text . char
-    execute "normal! `>a=char`<i=char"
-    call setreg('a', save_reg, save_reg_type)
 endfunc " }}}
 
 function! asciidoc#base#parse_attributes(refresh) " {{{
