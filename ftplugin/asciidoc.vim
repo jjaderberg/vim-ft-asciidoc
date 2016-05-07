@@ -73,11 +73,12 @@ if -1 < match(g:asciidoc_use_defaults, 'options')
     endif
 
     setlocal commentstring=//\ %s
-    setlocal comments=fl:////,://,fbn:*,fbn:.
+    setlocal comments=fl:////,://,fn:*,fn:.
     setlocal formatoptions=tcqjnro
     let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
     setlocal spell
     setlocal spelllang=en
+    setlocal include=^include::
 endif
 " END Options }}}
 
