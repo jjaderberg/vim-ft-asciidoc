@@ -72,6 +72,11 @@ if -1 < match(g:asciidoc_use_defaults, 'options')
         let g:asciidoc_debug_level = 0
     endif
 
+    if !exists('g:asciidoc_table_autoalign')
+      " do not autoalign table cells by default
+      let g:asciidoc_table_autoalign = 0
+    endif
+
     setlocal commentstring=//\ %s
     setlocal comments=fl:////,://,fn:*,fn:.
     setlocal formatoptions=tcqjnro
@@ -373,6 +378,28 @@ onoremap <buffer> <silent> <LocalLeader>al :call asciidoc#experimental#text_obje
 nnoremap <buffer> <silent> <LocalLeader>csb :call asciidoc#experimental#change_surround_block()<CR>
 nnoremap <buffer> <silent> <LocalLeader>dsb :call asciidoc#experimental#delete_surround_block(1)<CR>
 
+" }}}
+
+" Tabular ==================================================          {{{
+if exists(':Tabularize')
+    " Use <Leader>| to realign tables with the Tabuliarize plugin
+    nnoremap <buffer> <LocalLeader><Bar> :Tabularize /<Bar>\(===\)\@!<CR> " we need a negative lookahead to avoid breaking the block delimiters
+    vnoremap <buffer> <LocalLeader><Bar> :Tabularize /<Bar>\(===\)\@!<CR> " we need a negative lookahead to avoid breaking the block delimiters
+
+    " Realign table when entering a |
+    if g:asciidoc_table_autoalign == 1
+      inoremap <buffer> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+      function! s:align()
+          if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# '^\s*|' || getline(line('.')+1) =~# '^\s*|')
+              let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+              let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+              Tabularize /|\(=\)\@!
+              normal! 0
+              call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+          endif
+      endfunction
+    endif
+endif
 " }}}
 
 " vim: set fdm=marker:

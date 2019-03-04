@@ -279,6 +279,9 @@ Move forward to end of section with |][| and backward with |[]|.
     " Table attributes
     nnoremap <buffer> <LocalLeader>cols :call asciidoc#table#insert_attributes('cols')<CR>
     nnoremap <buffer> <LocalLeader>opts :call asciidoc#table#insert_attributes('options')<CR>
+    " Table alignment (requires Tabular vim plugin)
+    nnoremap <buffer> <LocalLeader><Bar> :Tabularize /<Bar>\(===\)\@!<CR>
+    vnoremap <buffer> <LocalLeader><Bar> :Tabularize /<Bar>\(===\)\@!<CR>
     " End.Table }}}
 
 
