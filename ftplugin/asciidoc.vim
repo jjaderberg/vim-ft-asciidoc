@@ -77,7 +77,6 @@ if -1 < match(g:asciidoc_use_defaults, 'options')
     setlocal formatoptions=tcqjnro
     let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
     setlocal spell
-    setlocal spelllang=en
     setlocal include=^include::
 endif
 " END Options }}}
