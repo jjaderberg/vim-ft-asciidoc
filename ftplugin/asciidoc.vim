@@ -66,8 +66,9 @@ let g:atx_to_setext = {
 
 " Options ==================================================          {{{
 if -1 < match(g:asciidoc_use_defaults, 'options')
-    let g:asciidoc_browser = "Firefox"
-    let g:asciidoc_preview_app = "Firefox"
+    if !exists('g:asciidoc_preview_app')
+        let g:asciidoc_preview_app = "open"
+    endif
     if !exists('g:asciidoc_debug_level')
         let g:asciidoc_debug_level = 0
     endif
@@ -112,7 +113,7 @@ endif
 " Navigating ===============================================          {{{
 if -1 < match(g:asciidoc_use_defaults, 'navigating')
     " Preview asciidoc file with `g:asciidoc_preview_app` application
-    nnoremap <buffer> <LocalLeader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
+    nnoremap <buffer> <LocalLeader>of :execute "!" . g:asciidoc_preview_app . " file://" . shellescape(expand('%:p'))<CR>
 
     " Follow link under cursor
     nnoremap <buffer> ,gf :AdocFollowLinkUnderCursor edit<CR>
