@@ -359,6 +359,42 @@ There are also two shorthands for adding the attributes `options=""` and `cols="
 With the cursor inside the table, kbd:[+,cols+] adds the latter and kbd:[+,opts+] the former.
 
 
+==== Aligning
+
+When the https://github.com/godlygeek/tabular[Tabular Plugin] is
+installed (which is highly recommended when working with tables),
+alignment of tables is possible via kbd:[+,|+]. This applies only to tables
+that use the Bar kbd:[+|+] as separator between cells.
+
+Be aware that this only works for basic tables and certain features like
+cell spanning do not work well with it together. It won't break the table,
+but the cell spanning will not be visualized in the asciidoc sourcecode.
+
+.Before
+....
+[%header]
+|===
+|Animal|Color|Food
+|Chicken|white|mostlycrop
+|Pig|rose|everything
+|===
+....
+
+.After
+....
+[%header]
+|===
+| Animal  | Color | Food
+| Chicken | white | mostly crop
+| Pig     | rose  | everything
+|===
+....
+
+If the option `g:asciidoc_table_autoalign` is set to 1 (which is set to 0
+by default) a function will be enabled that autoaligns a table each time
+the Bar kbd:[+|+] is entered inside the table.
+
+
 [[editing-motions]]
 === Motions
 
