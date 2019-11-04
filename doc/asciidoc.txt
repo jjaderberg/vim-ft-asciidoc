@@ -324,7 +324,6 @@ command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-arg
     setlocal formatoptions=tcqjnro
     let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
     setlocal spell
-    setlocal spelllang=en
     setlocal include=^include::
 
 ==============================================================================
