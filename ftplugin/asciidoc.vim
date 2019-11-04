@@ -161,8 +161,8 @@ if -1 < match(g:asciidoc_use_defaults, 'editing')
     nnoremap <buffer> <LocalLeader>tk viw<Esc>:AdocFormatText ^<CR>
 
     " subscript
-    vnoremap <buffer> <LocalLeader>tj <Esc>:AdocFormatText ^<CR>
-    nnoremap <buffer> <LocalLeader>tj viw<Esc>:AdocFormatText ^<CR>
+    vnoremap <buffer> <LocalLeader>tj <Esc>:AdocFormatText ~<CR>
+    nnoremap <buffer> <LocalLeader>tj viw<Esc>:AdocFormatText ~<CR>
 
     " passthrough
     vnoremap <buffer> <LocalLeader>tp <Esc>:AdocFormatText +<CR>

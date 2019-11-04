@@ -134,8 +134,8 @@ Move forward to end of section with |][| and backward with |[]|.
     nnoremap <buffer> <localleader>tk viw<Esc>:AdocFormatText ^<CR>
 
     " subscript
-    vnoremap <buffer> <localleader>tj <Esc>:AdocFormatText ^<CR>
-    nnoremap <buffer> <localleader>tj viw<Esc>:AdocFormatText ^<CR>
+    vnoremap <buffer> <localleader>tj <Esc>:AdocFormatText ~<CR>
+    nnoremap <buffer> <localleader>tj viw<Esc>:AdocFormatText ~<CR>
 
     " passthrough
     vnoremap <buffer> <localleader>tp <Esc>:AdocFormatText +<CR>
