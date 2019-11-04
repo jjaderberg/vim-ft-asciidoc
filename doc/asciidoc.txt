@@ -88,7 +88,10 @@ render AsciiDoc on the fly, the normal mode {<LocalLeader>of} map can be used
 to open the current file in the external application.
 
     " Preview asciidoc file with `g:asciidoc_preview_app` application
-    nnoremap <buffer> <localleader>of :execute "!open file://" . shellescape(expand('%:p')) . " -a " . g:asciidoc_preview_app<CR>
+    nnoremap <buffer> <LocalLeader>of :execute "!" . g:asciidoc_preview_app . " file://" . shellescape(expand('%:p'))<CR>
+
+    " Set firefox as the default preview app
+    let g:asciidoc_preview_app = 'firefox'
 
 
 *3.2* Follow link
@@ -325,6 +328,7 @@ command! -buffer -nargs=1 AdocInsertTable call asciidoc#base#insert_table(<f-arg
     let &formatlistpat="^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*"
     setlocal spell
     setlocal include=^include::
+    let g:asciidoc_table_autoalign = 0
 
 ==============================================================================
 *7.* Disable defaults					*adoc-disable*
